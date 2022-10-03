@@ -4,6 +4,7 @@ import 'package:course_guide/views/onboarding/page3.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:glassmorphism/glassmorphism.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
 // import dot indicator
@@ -167,23 +168,26 @@ class _OnboardingState extends State<Onboarding> {
   }
 
   Widget buildStartButton() {
-    return Container(
-      width: double.infinity,
-      alignment: Alignment.center,
-      height: 83.h,
-      decoration: BoxDecoration(
-        color: HexColor("#40A49C"),
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(20.r),
-          topRight: Radius.circular(20.r),
+    return GestureDetector(
+      onTap: () => context.go('/sign-in'),
+      child: Container(
+        width: double.infinity,
+        alignment: Alignment.center,
+        height: 83.h,
+        decoration: BoxDecoration(
+          color: HexColor("#40A49C"),
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(20.r),
+            topRight: Radius.circular(20.r),
+          ),
         ),
-      ),
-      child: Text(
-        "Let's Start",
-        style: GoogleFonts.archivo(
-          color: Colors.white,
-          fontSize: 20.sp,
-          fontWeight: FontWeight.bold,
+        child: Text(
+          "Let's Start",
+          style: GoogleFonts.archivo(
+            color: Colors.white,
+            fontSize: 20.sp,
+            fontWeight: FontWeight.bold,
+          ),
         ),
       ),
     );
