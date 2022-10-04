@@ -1,7 +1,9 @@
+import 'package:course_guide/controllers/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:provider/provider.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({Key? key}) : super(key: key);
@@ -29,6 +31,7 @@ class _SignUpState extends State<SignUp> {
 
   @override
   Widget build(BuildContext context) {
+    final Auth auth = Provider.of<Auth>(context);
     return Scaffold(
       body: Container(
         height: MediaQuery.of(context).size.height,
@@ -233,6 +236,7 @@ class _SignUpState extends State<SignUp> {
                                 ),
                               ),
                               TextFormField(
+                                controller: _locationController,
                                 validator: (String? value) {
                                   if (value == null || value.isEmpty) {
                                     return 'Please enter your location';
@@ -274,6 +278,7 @@ class _SignUpState extends State<SignUp> {
                                 ),
                               ),
                               TextFormField(
+                                controller: _passwordController,
                                 validator: (String? value) {
                                   if (value == null ||
                                       value.isEmpty ||
@@ -282,6 +287,7 @@ class _SignUpState extends State<SignUp> {
                                   }
                                   return null;
                                 },
+                                obscureText: true,
                                 decoration: InputDecoration(
                                   fillColor: HexColor("#F2F3F7"),
                                   filled: true,
@@ -317,6 +323,7 @@ class _SignUpState extends State<SignUp> {
                                 ),
                               ),
                               TextFormField(
+                                controller: _confirmPasswordController,
                                 validator: (String? value) {
                                   if (value == null ||
                                       value.isEmpty ||
@@ -325,6 +332,7 @@ class _SignUpState extends State<SignUp> {
                                   }
                                   return null;
                                 },
+                                obscureText: true,
                                 decoration: InputDecoration(
                                   fillColor: HexColor("#F2F3F7"),
                                   filled: true,
@@ -348,12 +356,34 @@ class _SignUpState extends State<SignUp> {
                         Padding(
                           padding: const EdgeInsets.only(top: 30),
                           child: ElevatedButton(
-                            onPressed: () {
+                            onPressed: () async {
                               if (_formKey.currentState!.validate()) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                      content: Text('Processing Data')),
-                                );
+                                try {
+                                  await auth.signUpWithEmailAndPassword(
+                                      _emailController.text,
+                                      _confirmPasswordController.text,
+                                      _fullnameController.text,
+                                      _locationController.text,
+                                      _selectedDate!);
+                                  if (mounted) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                        content: Text(
+                                            'Sign up successful, please login'),
+                                      ),
+                                    );
+                                  }
+                                } catch (e) {
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(SnackBar(
+                                    content: Text(e.toString()),
+                                  ));
+                                }
+                              } else {
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(const SnackBar(
+                                  content: Text("Please fill in all fields"),
+                                ));
                               }
                             },
                             style: ElevatedButton.styleFrom(

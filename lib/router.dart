@@ -20,16 +20,16 @@ final GoRouter router = GoRouter(
               const SignInPage(),
         ),
         GoRoute(
-          redirect: (BuildContext context, GoRouterState state) {
+          redirect: (BuildContext context, GoRouterState state) async {
             final auth = Provider.of<Auth>(context, listen: false);
-            if (auth.isAuthenticated) {
+            if (auth.isAuthenticated && state.location == '/home') {
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
                   content: Text('Welcome back!'),
                   backgroundColor: Colors.green,
                 ),
               );
-              return '/home';
+              return null;
             } else {
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(

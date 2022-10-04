@@ -1,7 +1,9 @@
+import 'package:course_guide/controllers/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:provider/provider.dart';
 
 class ForgotPasswordPage extends StatefulWidget {
   const ForgotPasswordPage({Key? key}) : super(key: key);
@@ -15,12 +17,11 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   // email controller
   final TextEditingController _emailController = TextEditingController();
-  // password controller
-  final TextEditingController _passwordController = TextEditingController();
 
   bool rememberMe = false;
   @override
   Widget build(BuildContext context) {
+    final Auth auth = Provider.of<Auth>(context);
     return Scaffold(
       body: Form(
         key: _formKey,
@@ -102,7 +103,12 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
 
                 // sign in button
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    if (_formKey.currentState!.validate()) {
+                      auth.sendPasswordResetEmail(_emailController.text);
+                      context.go('/sign-in');
+                    }
+                  },
                   style: ElevatedButton.styleFrom(
                     foregroundColor: Colors.white,
                     backgroundColor: HexColor('#40A49C'),
@@ -111,7 +117,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                       borderRadius: BorderRadius.circular(10.0),
                     ),
                   ),
-                  child: const Text("Sign Up"),
+                  child: const Text("Send"),
                 ),
                 const SizedBox(
                   height: 20,

@@ -122,6 +122,7 @@ class _SignInPageState extends State<SignInPage> {
                         height: 10,
                       ),
                       TextFormField(
+                        obscureText: true,
                         controller: _passwordController,
                         validator: (String? value) {
                           if (value == null || value.isEmpty) {
@@ -186,13 +187,14 @@ class _SignInPageState extends State<SignInPage> {
                   onPressed: () async {
                     if (_formKey.currentState!.validate()) {
                       try {
-                        await auth.signInWithEmailAndPassword(
+                        auth
+                            .signInWithEmailAndPassword(
                           _emailController.text,
                           _passwordController.text,
-                        );
-                        if (mounted) {
+                        )
+                            .then((value) {
                           context.go('/home');
-                        }
+                        });
                       } catch (e) {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(

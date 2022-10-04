@@ -118,6 +118,25 @@ class Auth extends ChangeNotifier {
     }
   }
 
+  // send password reset email
+  Future<void> sendPasswordResetEmail(String email) async {
+    try {
+      // send password reset email
+      await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+    } on FirebaseAuthException catch (e) {
+      // if error is invalid email
+      if (e.code == 'invalid-email') {
+        throw 'Invalid email';
+      }
+      // if error is user not found
+      if (e.code == 'user-not-found') {
+        throw 'User not found';
+      }
+      // if error is unknown
+      throw 'Unknown error';
+    }
+  }
+
   void authenticate() {
     _isAuthenticated = true;
     notifyListeners();
