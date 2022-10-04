@@ -169,7 +169,7 @@ class _OnboardingState extends State<Onboarding> {
 
   Widget buildStartButton() {
     return GestureDetector(
-      onTap: () => context.go('/sign-in'),
+      onTap: () => context.go('/landing'),
       child: Container(
         width: double.infinity,
         alignment: Alignment.center,
