@@ -14,7 +14,7 @@ class Landing extends StatelessWidget {
     return Container(
       decoration: const BoxDecoration(
         image: DecorationImage(
-          image: AssetImage('assets/1.jpg'),
+          image: AssetImage('assets/1.jpeg'),
           fit: BoxFit.cover,
         ),
       ),

@@ -39,7 +39,7 @@ class _SignUpState extends State<SignUp> {
         decoration: const BoxDecoration(
           //color: Colors.black.withOpacity(0.5),
           image: DecorationImage(
-            image: AssetImage('assets/1.jpg'),
+            image: AssetImage('assets/1.jpeg'),
             fit: BoxFit.cover,
           ),
         ),

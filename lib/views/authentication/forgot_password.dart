@@ -31,7 +31,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
           decoration: BoxDecoration(
             color: Colors.black.withOpacity(0.5),
             image: const DecorationImage(
-              image: AssetImage('assets/1.jpg'),
+              image: AssetImage('assets/1.jpeg'),
               fit: BoxFit.cover,
             ),
           ),
