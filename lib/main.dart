@@ -1,3 +1,5 @@
+import 'package:course_guide/controllers/auth.dart';
+import 'package:course_guide/firebase_options.dart';
 import 'package:course_guide/router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -5,9 +7,16 @@ import 'package:go_router/go_router.dart';
 import 'package:url_strategy/url_strategy.dart';
 import 'package:provider/provider.dart';
 import 'package:hexcolor/hexcolor.dart';
+// import firebase core
+import 'package:firebase_core/firebase_core.dart';
 
-void main() {
+void main() async {
+  // ensure binding is initialized
+  WidgetsFlutterBinding.ensureInitialized();
+  // init firebase from options
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   setPathUrlStrategy();
+
   runApp(const MyApp());
 }
 
@@ -20,17 +29,24 @@ class MyApp extends StatelessWidget {
     return ScreenUtilInit(
         designSize: const Size(375, 667),
         builder: (context, child) {
-          return MaterialApp.router(
-            title: 'Course Guide',
-            theme: ThemeData(
-              colorScheme: ColorScheme.light(
-                primary: HexColor('#FFC107'),
-                secondary: HexColor('#FDE84C'),
+          return MultiProvider(
+            providers: [
+              ChangeNotifierProvider(
+                create: (_) => Auth(),
               ),
+            ],
+            child: MaterialApp.router(
+              title: 'Course Guide',
+              theme: ThemeData(
+                colorScheme: ColorScheme.light(
+                  primary: HexColor('#FFC107'),
+                  secondary: HexColor('#FDE84C'),
+                ),
+              ),
+              routerDelegate: router.routerDelegate,
+              routeInformationProvider: router.routeInformationProvider,
+              routeInformationParser: router.routeInformationParser,
             ),
-            routerDelegate: router.routerDelegate,
-            routeInformationProvider: router.routeInformationProvider,
-            routeInformationParser: router.routeInformationParser,
           );
         });
   }
