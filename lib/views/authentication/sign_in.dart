@@ -37,216 +37,216 @@ class _SignInPageState extends State<SignInPage> {
               fit: BoxFit.cover,
             ),
           ),
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                const SizedBox(
-                  height: 30,
-                ),
-                const Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Icon(
-                    Icons.school,
-                    color: Colors.white,
-                    size: 100,
+          child: Container(
+            color: Colors.black.withOpacity(0.5),
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  const SizedBox(
+                    height: 30,
                   ),
-                ),
-                const SizedBox(
-                  height: 100,
-                ),
-                // sign in text field field with white
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Email Address",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 12.sp,
-                          fontWeight: FontWeight.bold,
+                  Image.asset(
+                    'assets/logo.png',
+                    height: 300.h,
+                    width: 300.w,
+                  ),
+                  const SizedBox(
+                    height: 2,
+                  ),
+                  // sign in text field field with white
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20, vertical: 10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Email Address",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 12.sp,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      TextFormField(
-                        controller: _emailController,
-                        validator: (String? value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter your email';
-                          }
-                          return null;
-                        },
-                        style: TextStyle(
-                          fontSize: 14.sp,
+                        const SizedBox(
+                          height: 10,
                         ),
-                        decoration: InputDecoration(
-                          hintText: "Enter your email",
-                          hintStyle: TextStyle(
-                            // color: Colors.wh,
+                        TextFormField(
+                          controller: _emailController,
+                          validator: (String? value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter your email';
+                            }
+                            return null;
+                          },
+                          style: TextStyle(
                             fontSize: 14.sp,
                           ),
-                          fillColor: Colors.white,
-                          filled: true,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            borderSide: const BorderSide(
-                              color: Colors.white,
+                          decoration: InputDecoration(
+                            hintText: "Enter your email",
+                            hintStyle: TextStyle(
+                              // color: Colors.wh,
+                              fontSize: 14.sp,
+                            ),
+                            fillColor: Colors.white,
+                            filled: true,
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                              borderSide: const BorderSide(
+                                color: Colors.white,
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
 
-                // password text field field with white
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Password",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 12.sp,
-                          fontWeight: FontWeight.bold,
+                  // password text field field with white
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20, vertical: 10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Password",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 12.sp,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      TextFormField(
-                        obscureText: true,
-                        controller: _passwordController,
-                        validator: (String? value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter your password';
-                          }
-                          return null;
-                        },
-                        style: TextStyle(
-                          fontSize: 14.sp,
+                        const SizedBox(
+                          height: 10,
                         ),
-                        decoration: InputDecoration(
-                          hintText: "Enter your password",
-                          hintStyle: TextStyle(
-                            // color: Colors.wh,
+                        TextFormField(
+                          obscureText: true,
+                          controller: _passwordController,
+                          validator: (String? value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter your password';
+                            }
+                            return null;
+                          },
+                          style: TextStyle(
                             fontSize: 14.sp,
                           ),
-                          fillColor: Colors.white,
-                          filled: true,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            borderSide: const BorderSide(
-                              color: Colors.white,
+                          decoration: InputDecoration(
+                            hintText: "Enter your password",
+                            hintStyle: TextStyle(
+                              // color: Colors.wh,
+                              fontSize: 14.sp,
+                            ),
+                            fillColor: Colors.white,
+                            filled: true,
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                              borderSide: const BorderSide(
+                                color: Colors.white,
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
 
-                // remember me checkbox
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                  child: Row(
-                    children: [
-                      Checkbox(
-                        value: rememberMe,
-                        side: const BorderSide(
-                          color: Colors.white,
+                  // remember me checkbox
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20, vertical: 10),
+                    child: Row(
+                      children: [
+                        Checkbox(
+                          value: rememberMe,
+                          side: const BorderSide(
+                            color: Colors.white,
+                          ),
+                          onChanged: (bool? value) {
+                            setState(() {
+                              rememberMe = value!;
+                            });
+                          },
                         ),
-                        onChanged: (bool? value) {
-                          setState(() {
-                            rememberMe = value!;
+                        Text(
+                          "Remember me",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 12.sp,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  // sign in button
+                  ElevatedButton(
+                    onPressed: () async {
+                      if (_formKey.currentState!.validate()) {
+                        try {
+                          auth
+                              .signInWithEmailAndPassword(
+                            _emailController.text,
+                            _passwordController.text,
+                          )
+                              .then((value) {
+                            context.go('/home');
                           });
-                        },
-                      ),
-                      Text(
-                        "Remember me",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 12.sp,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-
-                // sign in button
-                ElevatedButton(
-                  onPressed: () async {
-                    if (_formKey.currentState!.validate()) {
-                      try {
-                        auth
-                            .signInWithEmailAndPassword(
-                          _emailController.text,
-                          _passwordController.text,
-                        )
-                            .then((value) {
-                          context.go('/home');
-                        });
-                      } catch (e) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text(e.toString()),
-                          ),
-                        );
+                        } catch (e) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(e.toString()),
+                            ),
+                          );
+                        }
                       }
-                    }
-                  },
-                  style: ElevatedButton.styleFrom(
-                    foregroundColor: Colors.white,
-                    backgroundColor: HexColor('#40A49C'),
-                    fixedSize: Size(240.w, 50.h),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
+                    },
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.white,
+                      backgroundColor: HexColor('#40A49C'),
+                      fixedSize: Size(240.w, 50.h),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                    ),
+                    child: const Text("Sign Up"),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  // forgot password text button
+                  TextButton(
+                    onPressed: () {
+                      context.go('/forgot-password');
+                    },
+                    child: Text(
+                      "Forgot Password?",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 12.sp,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
-                  child: const Text("Sign Up"),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                // forgot password text button
-                TextButton(
-                  onPressed: () {
-                    context.go('/forgot-password');
-                  },
-                  child: Text(
-                    "Forgot Password?",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 12.sp,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
 
-                // already have an account text button
-                TextButton(
-                  onPressed: () {
-                    context.go('/sign-up');
-                  },
-                  child: Text(
-                    "Don't have an account? Sign Up",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 12.sp,
-                      fontWeight: FontWeight.bold,
+                  // already have an account text button
+                  TextButton(
+                    onPressed: () {
+                      context.go('/sign-up');
+                    },
+                    child: Text(
+                      "Don't have an account? Sign Up",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 12.sp,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

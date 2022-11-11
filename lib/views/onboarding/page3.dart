@@ -17,7 +17,7 @@ class Page3 extends StatelessWidget {
         ),
       ),
       child: Container(
-        color: Colors.black.withOpacity(.2),
+        color: Colors.black.withOpacity(.5),
         child: Center(
           child: Glass(
             child: Text(
