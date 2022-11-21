@@ -72,7 +72,7 @@ class Landing extends StatelessWidget {
                   ),
                 ),
               ),
-              child: const Text("Sign In"),
+              child: const Text("Log In"),
             ),
           ],
         ),

@@ -6,9 +6,16 @@ import 'package:go_router/go_router.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class FindYourConsultant extends StatelessWidget {
+class FindYourConsultant extends StatefulWidget {
   const FindYourConsultant({Key? key}) : super(key: key);
 
+  @override
+  State<FindYourConsultant> createState() => _FindYourConsultantState();
+}
+
+class _FindYourConsultantState extends State<FindYourConsultant> {
+
+  TextEditingController _searchController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -21,7 +28,6 @@ class FindYourConsultant extends StatelessWidget {
                 backgroundColor: Colors.white,
                 leading: IconButton(
                   onPressed: () => context.go("/home"),
-
                   icon: const Icon(
                     Icons.arrow_back_ios,
                     color: Color(0xFF40A49C),
@@ -44,7 +50,13 @@ class FindYourConsultant extends StatelessWidget {
                   height: 50.h,
                   alignment: Alignment.center,
                   child: TextField(
+                    controller: _searchController,
                     showCursor: false,
+                    onChanged: (value) {
+                      setState(() {
+                        
+                      });
+                    },
                     decoration: InputDecoration(
                       enabled: true,
                       suffixIcon: Container(
@@ -123,10 +135,17 @@ class FindYourConsultant extends StatelessWidget {
                 child: CircularProgressIndicator(),
               );
             }
+
+            // search through the list of consultants
+            final consultants = snapshot.data!.docs.where((element) {
+              final name = element.data()['name'].toString().toLowerCase();
+              final searchLower = _searchController.text.toLowerCase();
+              return name.contains(searchLower);
+            }).toList();
             return ListView.builder(
-              itemCount: snapshot.data!.docs.length,
+              itemCount: consultants.length,
               itemBuilder: (context, index) {
-                return _buildUser(snapshot.data!.docs[index].data());
+                return _buildUser(consultants[index].data());
               },
             );
           }),
@@ -228,20 +247,49 @@ class FindYourConsultant extends StatelessWidget {
                     fontWeight: FontWeight.w400,
                   ),
                 ),
-                ElevatedButton(
-                  onPressed: () {
-                    // lauch phone call
-                    launchUrl(Uri.parse("tel:${data['phone']}")); 
-                  },
-                  child: Text(
-                    "Book An Appointment",
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    primary: HexColor("#40A49C"),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20.r),
+                Row(
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        // lauch phone call
+                        launchUrl(Uri.parse("tel:${data['phone']}"));
+                      },
+                      child: Text(
+                        "Book An Appointment",
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        primary: HexColor("#40A49C"),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.r),
+                        ),
+                      ),
                     ),
-                  ),
+                    SizedBox(
+                      width: 10.w,
+                    ),
+                    // call icon
+                    GestureDetector(
+                      onTap: () => launchUrl(Uri.parse("tel:${data['phone']}")),
+                      child: Container(
+                        //height: 0.h,
+                        width: 40.w,
+                        height: 40.h,
+                        decoration: BoxDecoration(
+                          color: HexColor("#C6F327"),
+                          //shape: BoxShape.circle,
+                          borderRadius: BorderRadius.circular(10.r),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Icon(
+                            FontAwesomeIcons.phoneAlt,
+                            color: HexColor("#40A49C"),
+                            size: 14,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 )
               ],
             ),

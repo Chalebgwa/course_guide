@@ -1,9 +1,16 @@
+import 'dart:io';
+
 import 'package:course_guide/models/user.dart';
 import 'package:flutter/material.dart';
 // import firebase auth
 import 'package:firebase_auth/firebase_auth.dart';
 // import firebase firestore
 import 'package:cloud_firestore/cloud_firestore.dart';
+// image picker
+import 'package:image_picker/image_picker.dart';
+
+// import storage
+import 'package:firebase_storage/firebase_storage.dart';
 
 class Auth extends ChangeNotifier {
   bool _isAuthenticated = false;
@@ -145,6 +152,44 @@ class Auth extends ChangeNotifier {
   void unAuthenticate() {
     _isAuthenticated = false;
     notifyListeners();
+  }
+
+  // change profile photo from file picker
+  Future<void> changeProfilePhoto() async {
+    try {
+      // get file from file picker
+      final XFile? file = await ImagePicker().pickImage(
+        source: ImageSource.gallery,
+        imageQuality: 50,
+      );
+      // if file is not null
+      if (file != null) {
+        // get file path
+        final String path = file.path;
+        // get user id
+        final String uid = _currentUser!.uid;
+        // upload file to firebase storage
+        final TaskSnapshot taskSnapshot = await FirebaseStorage.instance
+            .ref('users/$uid/profile.jpg')
+            .putFile(
+              File(path),
+            );
+        // get download url
+        final String downloadURL = await taskSnapshot.ref.getDownloadURL();
+        // update user data in firestore
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(uid)
+            .update(<String, dynamic>{'photoURL': downloadURL});
+        // update current user
+        _currentUser!.copyWith(photoURL: downloadURL);
+        // notify listeners
+        notifyListeners();
+      }
+    } on FirebaseException catch (e) {
+      // if error is unknown
+      //throw e.message;
+    }
   }
 
   // create

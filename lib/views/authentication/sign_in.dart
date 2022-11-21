@@ -21,6 +21,7 @@ class _SignInPageState extends State<SignInPage> {
   final TextEditingController _passwordController = TextEditingController();
 
   bool rememberMe = false;
+  bool _obscureText = true;
   @override
   Widget build(BuildContext context) {
     final Auth auth = Provider.of<Auth>(context);
@@ -121,7 +122,7 @@ class _SignInPageState extends State<SignInPage> {
                           height: 10,
                         ),
                         TextFormField(
-                          obscureText: true,
+                          obscureText: _obscureText,
                           controller: _passwordController,
                           validator: (String? value) {
                             if (value == null || value.isEmpty) {
@@ -144,6 +145,21 @@ class _SignInPageState extends State<SignInPage> {
                               borderRadius: BorderRadius.circular(10),
                               borderSide: const BorderSide(
                                 color: Colors.white,
+                              ),
+                            ),
+                            // view password button
+                            suffixIcon: IconButton(
+                              onPressed: () {
+                                setState(() {
+                                  _obscureText = !_obscureText;
+                                });
+                              
+                              },
+                              icon: Icon(
+                                _obscureText
+                                    ? Icons.visibility_off
+                                    : Icons.visibility,
+                                color: Colors.black,
                               ),
                             ),
                           ),
@@ -211,7 +227,7 @@ class _SignInPageState extends State<SignInPage> {
                         borderRadius: BorderRadius.circular(10.0),
                       ),
                     ),
-                    child: const Text("Sign Up"),
+                    child: const Text("Log In"),
                   ),
                   const SizedBox(
                     height: 20,

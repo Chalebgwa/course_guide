@@ -66,32 +66,32 @@ class _HomeViewState extends State<HomeView> {
                       ),
                       const Spacer(),
                       // bell icon with badge yellow dot
-                      StreamBuilder<List<NotificationModel>>(
-                          stream: notifications.getNotifications(),
-                          builder: (context, snapshot) {
-                            return Badge(
-                                badgeContent: const Text(''),
-                                badgeColor: Colors.yellow,
-                                showBadge: snapshot.data?.isNotEmpty ?? false,
-                                position:
-                                    BadgePosition.topEnd(top: 3.h, end: 18.w),
-                                child: PopupMenuButton(
-                                  offset: Offset(0, 58.h),
-                                  iconSize: 44.sp,
-                                  icon: const Icon(
-                                    Icons.notifications,
-                                    color: Color(0xFF40A49C),
-                                  ),
-                                  itemBuilder: (BuildContext context) {
-                                    return [
-                                      for (NotificationModel model
-                                          in snapshot?.data ?? [])
-                                        PopupMenuItem(
-                                            child: _buildNotification(model))
-                                    ];
-                                  },
-                                ));
-                          }),
+                      // StreamBuilder<List<NotificationModel>>(
+                      //     stream: notifications.getNotifications(),
+                      //     builder: (context, snapshot) {
+                      //       return Badge(
+                      //           badgeContent: const Text(''),
+                      //           badgeColor: Colors.yellow,
+                      //           showBadge: snapshot.data?.isNotEmpty ?? false,
+                      //           position:
+                      //               BadgePosition.topEnd(top: 3.h, end: 18.w),
+                      //           child: PopupMenuButton(
+                      //             offset: Offset(0, 58.h),
+                      //             iconSize: 44.sp,
+                      //             icon: const Icon(
+                      //               Icons.notifications,
+                      //               color: Color(0xFF40A49C),
+                      //             ),
+                      //             itemBuilder: (BuildContext context) {
+                      //               return [
+                      //                 for (NotificationModel model
+                      //                     in snapshot?.data ?? [])
+                      //                   PopupMenuItem(
+                      //                       child: _buildNotification(model))
+                      //               ];
+                      //             },
+                      //           ));
+                      //     }),
                       SizedBox(
                         width: 28.w,
                       )
@@ -203,7 +203,7 @@ class _HomeViewState extends State<HomeView> {
               if(currentPage == "News")
               SliverToBoxAdapter(
                     child: Wrap(
-                  alignment: WrapAlignment.start,
+                  alignment: WrapAlignment.spaceEvenly,
                   crossAxisAlignment: WrapCrossAlignment.start,
                   runAlignment: WrapAlignment.start,
                   runSpacing: 10.h,
@@ -253,7 +253,7 @@ class _HomeViewState extends State<HomeView> {
               if(currentPage == "Courses")
               SliverToBoxAdapter(
                   child: Wrap(
-                alignment: WrapAlignment.start,
+                alignment: WrapAlignment.spaceEvenly,
                 crossAxisAlignment: WrapCrossAlignment.start,
                 runAlignment: WrapAlignment.start,
                 runSpacing: 10.h,

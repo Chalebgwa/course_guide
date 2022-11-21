@@ -4,7 +4,7 @@ import 'package:course_guide/controllers/nav_control.dart';
 import 'package:course_guide/controllers/notifications.dart';
 import 'package:course_guide/firebase_options.dart';
 import 'package:course_guide/router.dart';
-// import firebase core
+import 'package:course_guide/views/home/profile/widget/edit_profile_form.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -48,6 +48,7 @@ class _MyAppState extends State<MyApp> {
         builder: (context, child) {
           return MultiProvider(
             providers: [
+              ChangeNotifierProvider(create: (_) => ProfileForm(auth)),
               ChangeNotifierProvider<Auth>.value(
                 value: auth,
               ),

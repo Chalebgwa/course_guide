@@ -33,4 +33,25 @@ class Client {
       'dob': dob,
     };
   }
+
+  // copy with
+  Client copyWith({
+    String? uid,
+    String? email,
+    String? name,
+    String? photoURL,
+    String? location,
+    DateTime? createdAt,
+    DateTime? dob,
+  }) {
+    return Client(
+      uid ?? this.uid,
+      email ?? this.email,
+      name ?? this.name,
+      photoURL ?? this.photoURL,
+      location ?? this.location,
+      createdAt ?? this.createdAt,
+      dob ?? this.dob,
+    );
+  }
 }

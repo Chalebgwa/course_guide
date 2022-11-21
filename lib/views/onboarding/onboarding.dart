@@ -72,7 +72,7 @@ class _OnboardingState extends State<Onboarding> {
                             right: 0.05.sw,
                           ),
                           child: TextButton(
-                            onPressed: _nextPage,
+                            onPressed: _skip,
                             child: Text(
                               'Skip',
                               style: GoogleFonts.archivo(
@@ -191,5 +191,9 @@ class _OnboardingState extends State<Onboarding> {
         ),
       ),
     );
+  }
+
+  void _skip() {
+    context.go('/landing');
   }
 }
