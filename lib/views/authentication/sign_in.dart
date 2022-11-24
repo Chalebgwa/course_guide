@@ -34,7 +34,7 @@ class _SignInPageState extends State<SignInPage> {
           decoration: BoxDecoration(
             color: Colors.black.withOpacity(0.5),
             image: const DecorationImage(
-              image: AssetImage('assets/1.jpeg'),
+              image: AssetImage('assets/01.jpg'),
               fit: BoxFit.cover,
             ),
           ),
@@ -153,7 +153,6 @@ class _SignInPageState extends State<SignInPage> {
                                 setState(() {
                                   _obscureText = !_obscureText;
                                 });
-                              
                               },
                               icon: Icon(
                                 _obscureText

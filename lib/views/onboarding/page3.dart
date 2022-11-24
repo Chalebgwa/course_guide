@@ -12,7 +12,8 @@ class Page3 extends StatelessWidget {
     return Container(
       decoration: const BoxDecoration(
         image: DecorationImage(
-          image: AssetImage('assets/3.jpeg'),
+          image: AssetImage('assets/03.jpg'),
+          alignment: Alignment.centerRight,
           fit: BoxFit.cover,
         ),
       ),

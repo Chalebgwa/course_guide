@@ -12,7 +12,7 @@ class Page1 extends StatelessWidget {
     return Container(
       decoration: const BoxDecoration(
         image: DecorationImage(
-          image: AssetImage('assets/1.jpeg'),
+          image: AssetImage('assets/01.jpg'),
           fit: BoxFit.cover,
         ),
       ),

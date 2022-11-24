@@ -39,7 +39,7 @@ class _SignUpState extends State<SignUp> {
         decoration: const BoxDecoration(
           //color: Colors.black.withOpacity(0.5),
           image: DecorationImage(
-            image: AssetImage('assets/1.jpeg'),
+            image: AssetImage('assets/04.jpg'),
             fit: BoxFit.cover,
           ),
         ),
@@ -70,7 +70,7 @@ class _SignUpState extends State<SignUp> {
                 // sign up form wrapped with card and to curved corners
                 Expanded(
                   child: Container(
-                    margin: const EdgeInsets.only(top: 200),
+                    margin: const EdgeInsets.only(top: 300),
                     decoration: const BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.only(

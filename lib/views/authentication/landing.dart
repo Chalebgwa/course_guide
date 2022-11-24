@@ -14,7 +14,7 @@ class Landing extends StatelessWidget {
     return Container(
       decoration: const BoxDecoration(
         image: DecorationImage(
-          image: AssetImage('assets/1.jpeg'),
+          image: AssetImage('assets/04.jpg'),
           fit: BoxFit.cover,
         ),
       ),
@@ -23,7 +23,7 @@ class Landing extends StatelessWidget {
         child: Column(
           children: [
             const SizedBox(
-              height: 30,
+              height: 200,
             ),
             Image.asset(
               'assets/logo.png',
@@ -31,7 +31,7 @@ class Landing extends StatelessWidget {
               width: 300.w,
             ),
             const SizedBox(
-              height: 50,
+              height: 20,
             ),
             // sign in button
             ElevatedButton(

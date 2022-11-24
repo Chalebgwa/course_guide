@@ -23,6 +23,7 @@ class ProfilePicture extends StatelessWidget {
             auth.changeProfilePhoto();
           },
           child: Badge(
+            showBadge: auth.currentUser?.uid == client.uid,
             position: BadgePosition.bottomEnd(bottom: 0, end: 0),
             badgeColor: HexColor('#FFD700'),
             badgeContent: Icon(

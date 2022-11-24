@@ -54,4 +54,9 @@ class Client {
       dob ?? this.dob,
     );
   }
+
+  @override
+  String toString() {
+    return name;
+  }
 }

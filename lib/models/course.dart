@@ -7,8 +7,9 @@ class Course {
   final String state;
   final int enrolled;
   final int graduated;
+  final String url;
 
-  Course(this.id, this.title, this.description, this.imageUrl, this.category, this.state, this.enrolled, this.graduated);
+  Course(this.id, this.title, this.description, this.imageUrl, this.category, this.state, this.enrolled, this.graduated, this.url);
 
   Course.fromJson(Map<String, dynamic> json)
       : id = json['id'],
@@ -18,6 +19,7 @@ class Course {
         category = json['category'].cast<String>(),
         state = json['state'],
         enrolled = json['enrolled'],
+        url = json['url'],
         graduated = json['graduated'];
 
 
@@ -30,6 +32,7 @@ class Course {
         'state': state,
         'enrolled': enrolled,
         'graduated': graduated,
+        'url': url,
       };  
 
 
@@ -43,6 +46,7 @@ class Course {
     String? state,
     int? enrolled,
     int? graduated,
+    String? url,
   }) {
     return Course(
       id ?? this.id,
@@ -53,6 +57,12 @@ class Course {
       state ?? this.state,
       enrolled ?? this.enrolled,
       graduated ?? this.graduated,
+      url ?? this.url,
     );
+  }
+
+ @override
+  String toString() {
+    return title;
   }
 }

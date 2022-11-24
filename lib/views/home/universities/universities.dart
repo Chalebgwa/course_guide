@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Universities extends StatelessWidget {
   const Universities({Key? key}) : super(key: key);
@@ -95,12 +96,16 @@ class UniCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
-                    uni["name"],
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 20.sp,
-                      fontWeight: FontWeight.bold,
+                  SizedBox(
+                    width: 200.w,
+                    child: Text(
+                      uni["name"],
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 20.sp,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                   SizedBox(
@@ -119,7 +124,11 @@ class UniCard extends StatelessWidget {
                     children: [
                       // filled and outlined buttons
                       ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          // download pdf using url_launcher
+                          launchUrl(
+                              Uri.parse("https://www.orimi.com/pdf-test.pdf"));
+                        },
                         child: Text(
                           "Programmes",
                           style: TextStyle(

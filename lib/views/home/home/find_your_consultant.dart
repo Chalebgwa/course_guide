@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:course_guide/views/home/home/widgets/book_appointment_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -14,7 +15,6 @@ class FindYourConsultant extends StatefulWidget {
 }
 
 class _FindYourConsultantState extends State<FindYourConsultant> {
-
   TextEditingController _searchController = TextEditingController();
   @override
   Widget build(BuildContext context) {
@@ -53,9 +53,7 @@ class _FindYourConsultantState extends State<FindYourConsultant> {
                     controller: _searchController,
                     showCursor: false,
                     onChanged: (value) {
-                      setState(() {
-                        
-                      });
+                      setState(() {});
                     },
                     decoration: InputDecoration(
                       enabled: true,
@@ -252,7 +250,14 @@ class _FindYourConsultantState extends State<FindYourConsultant> {
                     ElevatedButton(
                       onPressed: () {
                         // lauch phone call
-                        launchUrl(Uri.parse("tel:${data['phone']}"));
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => BookAppointScreen(
+                              consultDoc: data,
+                            ),
+                          ),
+                        );
                       },
                       child: Text(
                         "Book An Appointment",
