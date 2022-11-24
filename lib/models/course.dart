@@ -8,10 +8,11 @@ class Course {
   final int enrolled;
   final int graduated;
   final String url;
+  final List<String> tags;
 
-  Course(this.id, this.title, this.description, this.imageUrl, this.category, this.state, this.enrolled, this.graduated, this.url);
+  Course(this.id, this.title, this.description, this.imageUrl, this.category, this.state, this.enrolled, this.graduated, this.url, this.tags);
 
-  Course.fromJson(Map<String, dynamic> json)
+  Course.fromJson(Map<String, dynamic> json, )
       : id = json['id'],
         title = json['title'],
         description = json['description'],
@@ -20,7 +21,8 @@ class Course {
         state = json['state'],
         enrolled = json['enrolled'],
         url = json['url'],
-        graduated = json['graduated'];
+        graduated = json['graduated'],
+        tags = json['tags'].cast<String>();
 
 
   Map<String, dynamic> toJson() => {
@@ -33,6 +35,7 @@ class Course {
         'enrolled': enrolled,
         'graduated': graduated,
         'url': url,
+         "tags": tags,
       };  
 
 
@@ -47,6 +50,7 @@ class Course {
     int? enrolled,
     int? graduated,
     String? url,
+    List<String>? tags,
   }) {
     return Course(
       id ?? this.id,
@@ -58,6 +62,7 @@ class Course {
       enrolled ?? this.enrolled,
       graduated ?? this.graduated,
       url ?? this.url,
+      tags ?? this.tags,
     );
   }
 

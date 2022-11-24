@@ -12,7 +12,7 @@ class CourseList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<List<Course>>(
-        stream: CourseController().streamCourses,
+        stream: CourseController().streamCourses(fitered),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return const Center(child: CircularProgressIndicator());

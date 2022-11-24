@@ -10,16 +10,15 @@ class CourseController extends ChangeNotifier {
 
   StreamTransformer<QuerySnapshot<Map<String, dynamic>>, List<Course>>
       get streamTransformer {
-          return StreamTransformer.fromHandlers(
-              handleData: (QuerySnapshot<Map<String, dynamic>> snapshot, sink) {
-                  courses.clear();
-                  snapshot.docs.forEach((doc) {
-                      courses.add(Course.fromJson(doc.data()));
-                  });
-                  sink.add(courses);
-              }
-          );
-        }
+    return StreamTransformer.fromHandlers(
+        handleData: (QuerySnapshot<Map<String, dynamic>> snapshot, sink) {
+      courses.clear();
+      snapshot.docs.forEach((doc) {
+        courses.add(Course.fromJson(doc.data()));
+      });
+      sink.add(courses);
+    });
+  }
 
   void filterCourses(String category) {
     filteredCourses.clear();
@@ -54,10 +53,18 @@ class CourseController extends ChangeNotifier {
   List<Course> get allCourses => courses;
 
   //stream courses from firebase and add to courses list
-  Stream<List<Course>> get streamCourses {
+  Stream<List<Course>> streamCourses(List<String> categories) {
     // get courses from firebase
-    final Stream<QuerySnapshot<Map<String, dynamic>>> stream =
-        FirebaseFirestore.instance.collection('courses').snapshots();
+    late Stream<QuerySnapshot<Map<String, dynamic>>> stream;
+
+    if(categories.isEmpty) {
+      stream = FirebaseFirestore.instance.collection('courses').snapshots();
+    } else {
+      stream = FirebaseFirestore.instance
+          .collection('courses')
+          .where('tags', arrayContainsAny: categories)
+          .snapshots();
+    }
 
     // transform stream
 
