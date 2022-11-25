@@ -1,9 +1,13 @@
 // search delegate
+import 'dart:math';
+
 import 'package:course_guide/controllers/search_controller.dart';
 import 'package:course_guide/models/course.dart';
+import 'package:course_guide/models/news.dart';
 import 'package:course_guide/models/scholarships.dart';
 import 'package:course_guide/models/user.dart';
 import 'package:course_guide/views/courses/course_view.dart';
+import 'package:course_guide/views/home/home/widgets/news_detail.dart';
 import 'package:course_guide/views/home/home/widgets/scholarship_detail.dart';
 import 'package:course_guide/views/profile/user_view.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +25,8 @@ class MySearchDelegate extends SearchDelegate<String> {
       return result.imageUrl;
     } else if (result is Scholarships) {
       return result.image;
+    } else if(result is News) {
+      return result.image;
     }
     return "";
   }
@@ -32,9 +38,10 @@ class MySearchDelegate extends SearchDelegate<String> {
       return "Scholarship";
     } else if (result is Client) {
       return "User";
-    } else {
-      return "Unknown";
+    } else if (result is News) {
+      return "News";
     }
+    return "";
   }
 
   // search delegate
@@ -95,7 +102,7 @@ class MySearchDelegate extends SearchDelegate<String> {
                     getImageUrl(
                       snapshot.data[index],
                     ),
-                    
+
                   ),
                 ),
                 onTap: () {
@@ -161,6 +168,17 @@ class MySearchDelegate extends SearchDelegate<String> {
         builder: (context) {
           return CourseView(
             course: selectedResult,
+          );
+        },
+      ));
+    }
+
+    if(selectedResult is News) {
+      // navigate to news view
+      Navigator.push(context, MaterialPageRoute(
+        builder: (context) {
+          return NewsDetail(
+            news: selectedResult,
           );
         },
       ));

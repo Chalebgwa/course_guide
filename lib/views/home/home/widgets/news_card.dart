@@ -4,14 +4,16 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 class NewList extends StatelessWidget {
-  const NewList({Key? key, required List<String> fitered}) : super(key: key);
+  const NewList({Key? key,  required this.fitered}) : super(key: key);
+
+  final List<String> fitered;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       height: 350.h,
       child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-        stream: FirebaseFirestore.instance.collection('news').snapshots(),
+        stream: fitered.isNotEmpty ? FirebaseFirestore.instance.collection('news').where("tags", arrayContainsAny: fitered).snapshots() : FirebaseFirestore.instance.collection('news').snapshots(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return const Center(child: CircularProgressIndicator());
