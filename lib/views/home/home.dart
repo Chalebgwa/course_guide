@@ -255,65 +255,68 @@ class _HomeViewState extends State<HomeView> {
               )),
             if (currentPage == "Courses")
               SliverToBoxAdapter(
-                  child: Wrap(
-                alignment: WrapAlignment.spaceEvenly,
-                crossAxisAlignment: WrapCrossAlignment.start,
-                runAlignment: WrapAlignment.start,
-                runSpacing: 10.h,
-                children: [
-                  FilterChipX(
-                      icon: FontAwesomeIcons.bookBookmark,
-                      text: "Marketable",
-                      isSelected: filters.contains("Marketable"),
-                      onTap: () {
-                        setState(() {
-                          if (filters.contains("Marketable")) {
-                            filters.remove("Marketable");
-                          } else {
-                            filters.add("Marketable");
-                          }
-                        });
-                      }),
-                  FilterChipX(
-                      icon: FontAwesomeIcons.fire,
-                      text: "Trending",
-                      isSelected: filters.contains("Trending"),
-                      onTap: () {
-                        setState(() {
-                          if (filters.contains("Trending")) {
-                            filters.remove("Trending");
-                          } else {
-                            filters.add("Trending");
-                          }
-                        });
-                      }),
-                  FilterChipX(
-                      icon: FontAwesomeIcons.award,
-                      text: "Newest",
-                      isSelected: filters.contains("Newest"),
-                      onTap: () {
-                        setState(() {
-                          if (filters.contains("Newest")) {
-                            filters.remove("Newest");
-                          } else {
-                            filters.add("Newest");
-                          }
-                        });
-                      }),
-                  FilterChipX(
-                      icon: FontAwesomeIcons.rocket,
-                      text: "Advanced",
-                      isSelected: filters.contains("Advanced"),
-                      onTap: () {
-                        setState(() {
-                          if (filters.contains("Advanced")) {
-                            filters.remove("Advanced");
-                          } else {
-                            filters.add("Advanced");
-                          }
-                        });
-                      }),
-                ],
+                  child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Wrap(
+                  alignment: WrapAlignment.start,
+                  crossAxisAlignment: WrapCrossAlignment.start,
+                  runAlignment: WrapAlignment.start,
+                  runSpacing: 10.h,
+                  children: [
+                    FilterChipX(
+                        icon: FontAwesomeIcons.bookBookmark,
+                        text: "Marketable",
+                        isSelected: filters.contains("Marketable"),
+                        onTap: () {
+                          setState(() {
+                            if (filters.contains("Marketable")) {
+                              filters.remove("Marketable");
+                            } else {
+                              filters.add("Marketable");
+                            }
+                          });
+                        }),
+                    FilterChipX(
+                        icon: FontAwesomeIcons.fire,
+                        text: "Trending",
+                        isSelected: filters.contains("Trending"),
+                        onTap: () {
+                          setState(() {
+                            if (filters.contains("Trending")) {
+                              filters.remove("Trending");
+                            } else {
+                              filters.add("Trending");
+                            }
+                          });
+                        }),
+                    FilterChipX(
+                        icon: FontAwesomeIcons.award,
+                        text: "Newest",
+                        isSelected: filters.contains("Newest"),
+                        onTap: () {
+                          setState(() {
+                            if (filters.contains("Newest")) {
+                              filters.remove("Newest");
+                            } else {
+                              filters.add("Newest");
+                            }
+                          });
+                        }),
+                    FilterChipX(
+                        icon: FontAwesomeIcons.rocket,
+                        text: "Advanced",
+                        isSelected: filters.contains("Advanced"),
+                        onTap: () {
+                          setState(() {
+                            if (filters.contains("Advanced")) {
+                              filters.remove("Advanced");
+                            } else {
+                              filters.add("Advanced");
+                            }
+                          });
+                        }),
+                  ],
+                ),
               )),
             if (currentPage == "Courses")
               SliverToBoxAdapter(
@@ -332,6 +335,13 @@ class _HomeViewState extends State<HomeView> {
                   child: NewList(fitered: filters),
                 ),
               ),
+              if (currentPage == "Scholarships")
+              const SliverToBoxAdapter(
+              child: Padding(
+                padding: EdgeInsets.all(8.0),
+                child: ContactCourses(),
+              ),
+            ),
             if (currentPage == "Scholarships")
               SliverToBoxAdapter(
                 child: Padding(
@@ -340,12 +350,7 @@ class _HomeViewState extends State<HomeView> {
                       Container(height: 280.h, child: const ScholarshipView()),
                 ),
               ),
-            const SliverToBoxAdapter(
-              child: Padding(
-                padding: EdgeInsets.all(8.0),
-                child: ContactCourses(),
-              ),
-            ),
+            
           ],
         ),
       ),

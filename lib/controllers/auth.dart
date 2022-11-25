@@ -13,6 +13,10 @@ import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
 class Auth extends ChangeNotifier {
+
+ // scaffold key
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+
   bool _isAuthenticated = false;
 
   Client? _currentUser;
@@ -27,7 +31,7 @@ class Auth extends ChangeNotifier {
       // sign in with email and password
       final UserCredential userCredential =
           await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: email,
+        email: email.trim(),
         password: password,
       );
       // get user id
@@ -80,7 +84,7 @@ class Auth extends ChangeNotifier {
       // sign up with email and password
       final UserCredential userCredential =
           await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: email,
+        email: email.trim(),
         password: password,
       );
       // get user id
@@ -186,6 +190,37 @@ class Auth extends ChangeNotifier {
         // notify listeners
         notifyListeners();
       }
+    } on FirebaseException catch (e) {
+      // if error is unknown
+      //throw e.message;
+    }
+  }
+
+  Future<void> updateUser(
+      {String? fullname,
+      String? email,
+      String? phone,
+      String? password, String? username}) async {
+    try {
+      // get user id
+      final String uid = _currentUser!.uid;
+      // update user data in firestore
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(uid)
+          .update(<String, dynamic>{
+        'name': fullname,
+        'email': email,
+        'phone': phone,
+        'username': username,
+      });
+      // update current user
+      _currentUser!.copyWith(
+        name: fullname,
+        email: email,
+      );
+      // notify listeners
+      notifyListeners();
     } on FirebaseException catch (e) {
       // if error is unknown
       //throw e.message;

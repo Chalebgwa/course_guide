@@ -1,4 +1,5 @@
 import 'package:course_guide/controllers/auth.dart';
+import 'package:course_guide/views/home/profile/widget/edit_profile.dart';
 import 'package:course_guide/views/home/profile/widget/profile_button.dart';
 import 'package:course_guide/views/home/profile/widget/profile_picture.dart';
 import 'package:flutter/material.dart';
@@ -16,11 +17,24 @@ class Profile extends StatelessWidget {
       children: [
         ProfilePicture(client: auth.currentUser!),
         const SizedBox(height: 20),
-        ProfileButton(text: "Edit Profile", icon: FontAwesomeIcons.user, onTap: () {}),
+        ProfileButton(
+            text: "Edit Profile",
+            icon: FontAwesomeIcons.user,
+            onTap: () {
+              showDialog(
+                context: context,
+                builder: (context) => const Dialog(
+                  insetPadding: EdgeInsets.symmetric(horizontal: 20),
+                  backgroundColor: Colors.transparent,
+                  elevation: 0,
+                  child: EditProfileView(),
+                ),
+              );
+            }),
         const SizedBox(height: 20),
-        ProfileButton(text: "My Courses", icon: FontAwesomeIcons.file, onTap: () {}),
+        ProfileButton(
+            text: "My Courses", icon: FontAwesomeIcons.file, onTap: () {}),
       ],
-    
     );
   }
 }

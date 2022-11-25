@@ -3,7 +3,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
 class ProfileButton extends StatelessWidget {
-  const ProfileButton({Key? key, required this.text, required this.icon, required this.onTap}) : super(key: key);
+  const ProfileButton(
+      {Key? key, required this.text, required this.icon, required this.onTap})
+      : super(key: key);
   final String text;
   final IconData icon;
   final Function() onTap;
@@ -11,7 +13,7 @@ class ProfileButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => context.go('/consultants'),
+      onTap: onTap,
       child: Container(
         width: 349.w,
         height: 80.h,
@@ -31,7 +33,7 @@ class ProfileButton extends StatelessWidget {
                   color: const Color(0xFF40A49C),
                   borderRadius: BorderRadius.circular(20.r),
                 ),
-                child:  Icon(
+                child: Icon(
                   icon,
                   color: Color(0xFFFDE84C),
                   size: 30,

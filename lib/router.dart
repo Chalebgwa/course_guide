@@ -23,7 +23,9 @@ final GoRouter router = GoRouter(
       routes: [
         ShellRoute(
             builder: (context, state, child) {
+              final auth = context.watch<Auth>();
               return Scaffold(
+                key: auth.scaffoldKey,
                 body: child,
                 bottomNavigationBar: const BottomNav(),
               );

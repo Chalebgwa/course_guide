@@ -10,14 +10,27 @@ class ProfileForm extends ChangeNotifier {
   ValidationItem phone = ValidationItem();
   ValidationItem password = ValidationItem();
   ValidationItem confirmPassword = ValidationItem();
+  ValidationItem username = ValidationItem();
 
-  ProfileForm(this.auth);
+  ProfileForm(this.auth)
+      : fullname = ValidationItem(value: auth.currentUser!.name),
+        email = ValidationItem(value: auth.currentUser!.email),
+       // phone = ValidationItem(value: auth.currentUser!.),
+        username = ValidationItem(value: auth.currentUser!.name);
 
   void changeFullname(String value) {
     if (value.isNotEmpty) {
       fullname = ValidationItem(value: value, error: null);
     } else {
       fullname = ValidationItem(value: value, error: 'Fullname is required');
+    }
+  }
+
+  void changeUsername(String value) {
+    if (value.isNotEmpty) {
+      username = ValidationItem(value: value, error: null);
+    } else {
+      username = ValidationItem(value: value, error: 'Username is required');
     }
   }
 
@@ -58,7 +71,34 @@ class ProfileForm extends ChangeNotifier {
     return fullname.isValid() &&
         email.isValid() &&
         phone.isValid() &&
-        password.isValid() &&
-        confirmPassword.isValid();
+        username.isValid();
+  }
+
+  // submit
+  void submit() async {
+    if (isValid) {
+      await auth.updateUser(
+        fullname: fullname.value,
+        email: email.value,
+        phone: phone.value,
+        password: password.value,
+        username: username.value,
+      );
+
+      showDialog(context: auth.scaffoldKey.currentContext!, builder: (context) {
+        return AlertDialog(
+          title: Text('Success'),
+          content: Text('Profile updated successfully'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text('Ok'),
+            ),
+          ],
+        );
+      });
+    }
   }
 }

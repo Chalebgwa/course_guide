@@ -1,4 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:course_guide/views/home/home/course_list.dart';
+import 'package:course_guide/views/home/universities/course_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -126,8 +128,14 @@ class UniCard extends StatelessWidget {
                       ElevatedButton(
                         onPressed: () {
                           // download pdf using url_launcher
-                          launchUrl(
-                              Uri.parse("https://www.orimi.com/pdf-test.pdf"));
+                          // launchUrl(
+                          //     Uri.parse("https://www.orimi.com/pdf-test.pdf"));
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => CoursesList(),
+                            ),
+                          );
                         },
                         child: Text(
                           "Programmes",

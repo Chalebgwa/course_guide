@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:course_guide/models/course.dart';
+import 'package:course_guide/models/scholarships.dart';
 import 'package:course_guide/models/user.dart';
 import 'package:flutter/material.dart';
 
@@ -20,14 +21,15 @@ class SearchController extends ChangeNotifier {
 
   // search for a user, course or instructor  
   Future<List<dynamic>> search(String query) async {
-    // get users
-    final List<Client> users = await _searchUsers(query);
+   
+    // get scholarships
+    final scholarships = await _searchScholarships(query);
     // get courses
     final List<Course> courses = await _searchCourses(query);
     // get instructors
     //final List<Instructor> instructors = await _searchInstructors(query);
     // return list of users, courses and instructors
-    return [...users, ...courses,];
+    return [ ...courses, ...scholarships];
   }
 
   // search for users
@@ -74,6 +76,28 @@ class SearchController extends ChangeNotifier {
         .toList();
 
     return filteredCourses;
+  }
+  
+  Future<List<Scholarships>> _searchScholarships(String query) async {
+    // get courses from firestore
+    final QuerySnapshot<Map<String, dynamic>> querySnapshot =
+        await FirebaseFirestore.instance.collection('scholarships').get();
+    // get courses
+    final List<QueryDocumentSnapshot<Map<String, dynamic>>> documents =
+        querySnapshot.docs;
+    // get courses
+    final List<Scholarships> scholarships = documents
+        .map((QueryDocumentSnapshot<Map<String, dynamic>> documentSnapshot) =>
+            Scholarships.fromJson(documentSnapshot.data()))
+        .toList();
+    // filter courses
+    final List<Scholarships> filteredScholarships = scholarships
+        .where((Scholarships scholarships) =>
+            scholarships.title.toLowerCase().contains(query.toLowerCase()) ||
+            scholarships.description.contains(query.toLowerCase()))
+        .toList();
+
+    return filteredScholarships;
   }
   
 }

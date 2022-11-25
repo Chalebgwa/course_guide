@@ -57,6 +57,7 @@ class _MyAppState extends State<MyApp> {
               ),
               ChangeNotifierProvider(create: (_)=> CourseController()),
               ChangeNotifierProvider(create: (_)=> NavController()),
+              ChangeNotifierProvider(create: (_)=> ProfileForm(auth)),
 
 
             ],

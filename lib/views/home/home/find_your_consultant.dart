@@ -169,13 +169,14 @@ class _FindYourConsultantState extends State<FindYourConsultant> {
           ],
         ),
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             // avatar
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Container(
-                height: 80.h,
-                width: 80.w,
+                height: 60.h,
+                width: 60.h,
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(20.r),
