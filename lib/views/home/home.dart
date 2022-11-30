@@ -335,13 +335,13 @@ class _HomeViewState extends State<HomeView> {
                   child: NewList(fitered: filters),
                 ),
               ),
-              if (currentPage == "Scholarships")
+            if (currentPage == "Courses")
               const SliverToBoxAdapter(
-              child: Padding(
-                padding: EdgeInsets.all(8.0),
-                child: ContactCourses(),
+                child: Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: ContactCourses(),
+                ),
               ),
-            ),
             if (currentPage == "Scholarships")
               SliverToBoxAdapter(
                 child: Padding(
@@ -350,7 +350,6 @@ class _HomeViewState extends State<HomeView> {
                       Container(height: 280.h, child: const ScholarshipView()),
                 ),
               ),
-            
           ],
         ),
       ),

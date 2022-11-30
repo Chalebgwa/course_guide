@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:course_guide/views/home/home/course_list.dart';
+import 'package:course_guide/views/home/universities/advice_forums.dart';
 import 'package:course_guide/views/home/universities/course_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -127,13 +128,16 @@ class UniCard extends StatelessWidget {
                       // filled and outlined buttons
                       ElevatedButton(
                         onPressed: () {
-                          // download pdf using url_launcher
-                          // launchUrl(
-                          //     Uri.parse("https://www.orimi.com/pdf-test.pdf"));
+                          final docId = uni["docId"];
+
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => CoursesList(),
+                              builder: (context) => CoursesList(
+                                docId: docId,
+                                name: uni["name"],
+                                image: uni["imageUrl"],
+                              ),
                             ),
                           );
                         },
@@ -155,7 +159,15 @@ class UniCard extends StatelessWidget {
                         width: 10.w,
                       ),
                       OutlinedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          final docId = uni["docId"];
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => AdviceForums(docId: docId),
+                            ),
+                          );
+                        },
                         child: Text(
                           "Advice Forums",
                           style: TextStyle(

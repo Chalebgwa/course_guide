@@ -26,7 +26,13 @@ final GoRouter router = GoRouter(
               final auth = context.watch<Auth>();
               return Scaffold(
                 key: auth.scaffoldKey,
-                body: child,
+                body: WillPopScope(
+                  onWillPop: () {
+                    return Future.value(false);
+                  
+                  },
+                  child: child,
+                ),
                 bottomNavigationBar: const BottomNav(),
               );
             },

@@ -1,5 +1,6 @@
 import 'package:course_guide/controllers/auth.dart';
 import 'package:course_guide/views/home/profile/widget/edit_profile.dart';
+import 'package:course_guide/views/home/profile/widget/my_course_list.dart';
 import 'package:course_guide/views/home/profile/widget/profile_button.dart';
 import 'package:course_guide/views/home/profile/widget/profile_picture.dart';
 import 'package:flutter/material.dart';
@@ -33,7 +34,16 @@ class Profile extends StatelessWidget {
             }),
         const SizedBox(height: 20),
         ProfileButton(
-            text: "My Courses", icon: FontAwesomeIcons.file, onTap: () {}),
+            text: "My Courses",
+            icon: FontAwesomeIcons.file,
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => MyCourseList(),
+                ),
+              );
+            }),
       ],
     );
   }

@@ -99,6 +99,23 @@ class ProfileForm extends ChangeNotifier {
           ],
         );
       });
+    } else {
+
+      showDialog(context: auth.scaffoldKey.currentContext!, builder: (context) {
+        return AlertDialog(
+          title: Text('Error'),
+          content: Text('Please fill all fields'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text('Ok'),
+            ),
+          ],
+        );
+      });
+
     }
   }
 }

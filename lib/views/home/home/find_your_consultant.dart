@@ -126,7 +126,7 @@ class _FindYourConsultantState extends State<FindYourConsultant> {
       height: 300.h,
       child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
           stream:
-              FirebaseFirestore.instance.collection('constultants').snapshots(),
+              FirebaseFirestore.instance.collection('consultants').snapshots(),
           builder: (context, snapshot) {
             if (!snapshot.hasData) {
               return const Center(

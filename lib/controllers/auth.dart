@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:course_guide/models/db_init.dart';
 import 'package:course_guide/models/user.dart';
 import 'package:flutter/material.dart';
 // import firebase auth
@@ -13,20 +14,29 @@ import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
 class Auth extends ChangeNotifier {
-
- // scaffold key
+  // scaffold key
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
   bool _isAuthenticated = false;
 
   Client? _currentUser;
+  bool isloading = false;
 
   bool get isAuthenticated => _isAuthenticated;
 
   Client? get currentUser => _currentUser;
 
+  void initDB() {
+    final uniRef = FirebaseFirestore.instance.collection("universities");
+
+    for (Map<String, dynamic> doc in data) {
+      uniRef.doc(doc["key"]).collection("courses").doc(doc['title']).set(doc);
+    }
+  }
+
   // sign in with email and password
   Future<void> signInWithEmailAndPassword(String email, String password) async {
+    initDB();
     try {
       // sign in with email and password
       final UserCredential userCredential =
@@ -161,6 +171,8 @@ class Auth extends ChangeNotifier {
   // change profile photo from file picker
   Future<void> changeProfilePhoto() async {
     try {
+      isloading = true;
+      notifyListeners();
       // get file from file picker
       final XFile? file = await ImagePicker().pickImage(
         source: ImageSource.gallery,
@@ -193,6 +205,9 @@ class Auth extends ChangeNotifier {
     } on FirebaseException catch (e) {
       // if error is unknown
       //throw e.message;
+    } finally {
+      isloading = false;
+      notifyListeners();
     }
   }
 
@@ -200,7 +215,8 @@ class Auth extends ChangeNotifier {
       {String? fullname,
       String? email,
       String? phone,
-      String? password, String? username}) async {
+      String? password,
+      String? username}) async {
     try {
       // get user id
       final String uid = _currentUser!.uid;
@@ -215,7 +231,7 @@ class Auth extends ChangeNotifier {
         'username': username,
       });
       // update current user
-      _currentUser!.copyWith(
+      _currentUser = _currentUser!.copyWith(
         name: fullname,
         email: email,
       );
