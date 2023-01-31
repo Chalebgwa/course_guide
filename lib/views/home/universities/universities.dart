@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:course_guide/views/home/home/course_list.dart';
 import 'package:course_guide/views/home/universities/advice_forums.dart';
 import 'package:course_guide/views/home/universities/course_list.dart';
+import 'package:course_guide/views/home/universities/unipage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -59,138 +60,151 @@ class UniCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Container(
-        width: 349.w,
-        height: 137.h,
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(20.r),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.2),
-              spreadRadius: 5,
-              blurRadius: 7,
-              offset: const Offset(0, 3), // changes position of shadow
+      child: GestureDetector(
+        onTap: () {
+          final docId = uni["docId"];
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) =>Unipage(
+               uni: uni,
+              ),
             ),
-          ],
-        ),
-        child: Row(
-          children: [
-            // avatar
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                width: 100.w,
-                height: 100.h,
-                decoration: BoxDecoration(
-                  color: Colors.grey,
-                  image: DecorationImage(
-                    image: NetworkImage(uni["imageUrl"]),
-                    fit: BoxFit.cover,
+          );
+        },
+        child: Container(
+          width: 349.w,
+          height: 137.h,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(20.r),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.2),
+                spreadRadius: 5,
+                blurRadius: 7,
+                offset: const Offset(0, 3), // changes position of shadow
+              ),
+            ],
+          ),
+          child: Row(
+            children: [
+              // avatar
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  width: 100.w,
+                  height: 100.h,
+                  decoration: BoxDecoration(
+                    color: Colors.grey,
+                    image: DecorationImage(
+                      image: NetworkImage(uni["imageUrl"]),
+                      fit: BoxFit.cover,
+                    ),
+                    borderRadius: BorderRadius.circular(20.r),
                   ),
-                  borderRadius: BorderRadius.circular(20.r),
                 ),
               ),
-            ),
-            // name
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    width: 200.w,
-                    child: Text(
-                      uni["name"],
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 20.sp,
-                        fontWeight: FontWeight.bold,
+              // name
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      width: 200.w,
+                      child: Text(
+                        uni["name"],
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 20.sp,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
-                  ),
-                  SizedBox(
-                    width: 200.w,
-                    child: Text(
-                      uni["desc"],
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 10.sp,
+                    SizedBox(
+                      width: 200.w,
+                      child: Text(
+                        uni["desc"],
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 10.sp,
+                        ),
                       ),
                     ),
-                  ),
-                  Row(
-                    children: [
-                      // filled and outlined buttons
-                      ElevatedButton(
-                        onPressed: () {
-                          final docId = uni["docId"];
-
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => CoursesList(
-                                docId: docId,
-                                name: uni["name"],
-                                image: uni["imageUrl"],
+                    Row(
+                      children: [
+                        // filled and outlined buttons
+                        ElevatedButton(
+                          onPressed: () {
+                            final docId = uni["docId"];
+      
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => CoursesList(
+                                  docId: docId,
+                                  name: uni["name"],
+                                  image: uni["imageUrl"],
+                                ),
                               ),
+                            );
+                          },
+                          child: Text(
+                            "Programmes",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 10.sp,
                             ),
-                          );
-                        },
-                        child: Text(
-                          "Programmes",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 10.sp,
                           ),
-                        ),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: HexColor("#40A49C"),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10.r),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 10.w,
-                      ),
-                      OutlinedButton(
-                        onPressed: () {
-                          final docId = uni["docId"];
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => AdviceForums(docId: docId),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: HexColor("#40A49C"),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.r),
                             ),
-                          );
-                        },
-                        child: Text(
-                          "Advice Forums",
-                          style: TextStyle(
-                            color: HexColor("#40A49C"),
-                            fontWeight: FontWeight.bold,
-                            fontSize: 10.sp,
                           ),
                         ),
-                        style: OutlinedButton.styleFrom(
-                          side: BorderSide(
-                            color: HexColor("#40A49C"),
+                        SizedBox(
+                          width: 10.w,
+                        ),
+                        OutlinedButton(
+                          onPressed: () {
+                            final docId = uni["docId"];
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => AdviceForums(docId: docId),
+                              ),
+                            );
+                          },
+                          child: Text(
+                            "Advice Forums",
+                            style: TextStyle(
+                              color: HexColor("#40A49C"),
+                              fontWeight: FontWeight.bold,
+                              fontSize: 10.sp,
+                            ),
                           ),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10.r),
+                          style: OutlinedButton.styleFrom(
+                            side: BorderSide(
+                              color: HexColor("#40A49C"),
+                            ),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.r),
+                            ),
                           ),
                         ),
-                      ),
-                    ],
-                  )
-                ],
+                      ],
+                    )
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

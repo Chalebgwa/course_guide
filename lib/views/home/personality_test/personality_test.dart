@@ -9,6 +9,16 @@ class PersonalityTest extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return Container(
+      alignment: Alignment.center,
+      child: Text("Coming Soon",
+          style: TextStyle(
+              color: Colors.black,
+              fontSize: 30,
+              fontWeight: FontWeight.bold,
+              fontFamily: 'Montserrat'),),
+    );
+
     return StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
       stream:
           FirebaseFirestore.instance.collection('personality_test').snapshots(),

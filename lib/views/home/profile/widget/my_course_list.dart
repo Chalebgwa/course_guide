@@ -70,7 +70,7 @@ class _MyCourseListState extends State<MyCourseList> {
                             // ignore: sort_child_properties_last
                             children: [
                               // if(doc.data().containsKey("modules"))
-                              // for(Map<String,dynamic> doc2 in data[0]["modules"])
+                              // for(Map<String,dynamic> doc2 in data[0]["modules"])Me
                               // ListTile(
                               //   title: Text(doc2["title"]),
                               //   subtitle: Text("0"),

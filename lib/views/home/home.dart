@@ -12,6 +12,7 @@ import 'package:course_guide/views/home/home/widgets/scholarship_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:provider/provider.dart';
@@ -92,9 +93,21 @@ class _HomeViewState extends State<HomeView> {
                     //             },
                     //           ));
                     //     }),
-                    SizedBox(
-                      width: 28.w,
-                    )
+
+                    // logout button
+                    IconButton(
+                      onPressed: () {
+                        auth.logout();
+                        context.go('/sign-in');
+                      },
+                      icon: const Icon(
+                        Icons.logout,
+                        color: Color(0xFF40A49C),
+                      ),
+                    ),
+                    // SizedBox(
+                    //   width: 28.w,
+                    // )
                   ],
                 ),
               ),

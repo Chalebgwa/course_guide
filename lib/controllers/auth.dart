@@ -7,15 +7,50 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 // import firebase firestore
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:go_router/go_router.dart';
 // image picker
 import 'package:image_picker/image_picker.dart';
 
 // import storage
 import 'package:firebase_storage/firebase_storage.dart';
+// import local storage
+import 'package:shared_preferences/shared_preferences.dart';
+// import json
+import 'dart:convert';
 
 class Auth extends ChangeNotifier {
   // scaffold key
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+
+  Auth() {
+    // get user data from local storage
+    SharedPreferences.getInstance().then((prefs) {
+      // get user data
+      final String? userData = prefs.getString('user');
+      // if user data is not null
+      if (userData != null) {
+        // set current user
+        _currentUser = Client.fromMap(jsonDecode(userData));
+        // set is authenticated to true
+        _isAuthenticated = true;
+        // notify listeners
+        //scaffoldKey.currentState!.context.go('/home');
+        notifyListeners();
+      }
+    });
+  }
+
+  Future<void> init() async {
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? userData = prefs.getString('user');
+    if (userData != null) {
+      _currentUser = Client.fromMap(jsonDecode(userData));
+      _isAuthenticated = true;
+      notifyListeners();
+    }
+
+  }
 
   bool _isAuthenticated = false;
 
@@ -55,6 +90,10 @@ class Auth extends ChangeNotifier {
       _currentUser = Client.fromMap(data);
       // set is authenticated to true
       _isAuthenticated = true;
+      // Persist user data to local storage
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setString('user', jsonEncode(data));
+
       // notify listeners
       notifyListeners();
     } on FirebaseAuthException catch (e) {
@@ -165,6 +204,11 @@ class Auth extends ChangeNotifier {
 
   void unAuthenticate() {
     _isAuthenticated = false;
+    // REMOVE USER DATA FROM LOCAL STORAGE
+    SharedPreferences.getInstance().then((prefs) {
+      prefs.remove('user');
+    });
+
     notifyListeners();
   }
 
@@ -241,6 +285,16 @@ class Auth extends ChangeNotifier {
       // if error is unknown
       //throw e.message;
     }
+  }
+
+  void logout() {
+    _isAuthenticated = false;
+    _currentUser = null;
+    // REMOVE USER DATA FROM LOCAL STORAGE
+    SharedPreferences.getInstance().then((prefs) {
+      prefs.remove('user');
+    });
+    notifyListeners();
   }
 
   // create

@@ -11,6 +11,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:provider/provider.dart';
 import 'package:url_strategy/url_strategy.dart';
+import 'package:back_button_interceptor/back_button_interceptor.dart';
 
 void main() async {
   // ensure binding is initialized
@@ -19,26 +20,44 @@ void main() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   setPathUrlStrategy();
 
-  runApp(const MyApp());
+  final Auth auth = Auth();
+  await auth.init();
+
+  runApp(MyApp(auth: auth,));
 }
 
 class MyApp extends StatefulWidget {
-  const MyApp({super.key});
+  const MyApp({super.key, required this.auth});
+
+  final Auth auth;
 
   @override
   State<MyApp> createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
-  late final auth;
+  
+  // This widget is the root of your application.
 
   @override
   void initState() {
     super.initState();
-    auth = Auth();
+    BackButtonInterceptor.add(myInterceptor);
   }
 
-  // This widget is the root of your application.
+  @override
+  void dispose() {
+    BackButtonInterceptor.remove(myInterceptor);
+    super.dispose();
+  }
+
+  Future<bool> myInterceptor(bool stopDefaultButtonEvent, RouteInfo info) async {
+    if (info.currentRoute(context)?.settings.name == '/home') {
+      return true;
+    }
+    
+    return false;
+  }
 
   // This widget is the root of your application.
   @override
@@ -48,20 +67,19 @@ class _MyAppState extends State<MyApp> {
         builder: (context, child) {
           return MultiProvider(
             providers: [
-              ChangeNotifierProvider(create: (_) => ProfileForm(auth)),
+              ChangeNotifierProvider(create: (_) => ProfileForm(widget.auth)),
               ChangeNotifierProvider<Auth>.value(
-                value: auth,
+                value: widget.auth,
               ),
               ChangeNotifierProvider(
-                create: (_) => NotificationsController(auth),
+                create: (_) => NotificationsController(widget.auth),
               ),
-              ChangeNotifierProvider(create: (_)=> CourseController()),
-              ChangeNotifierProvider(create: (_)=> NavController()),
-              ChangeNotifierProvider(create: (_)=> ProfileForm(auth)),
-
-
+              ChangeNotifierProvider(create: (_) => CourseController()),
+              ChangeNotifierProvider(create: (_) => NavController()),
+              ChangeNotifierProvider(create: (_) => ProfileForm(widget.auth)),
             ],
             child: MaterialApp.router(
+              
               title: 'Course Guide',
               theme: ThemeData(
                 colorScheme: ColorScheme.light(

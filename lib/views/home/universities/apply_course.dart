@@ -56,7 +56,7 @@ class _ApplyCourseState extends State<ApplyCourse> {
             widget.data['description'] ?? 'No description',
             textAlign: TextAlign.center,
             style: const TextStyle(
-              fontSize: 15,
+              fontSize: 10,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -77,23 +77,42 @@ class _ApplyCourseState extends State<ApplyCourse> {
             ),
           ],
         ),
-        for (Map<String, dynamic> doc in widget.data['modules']
-            .where((element) => element['Semester'] == "1"))
+        if (widget.data['modules'] == null)
           Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
-                  doc['title'],
+                  "No modules listed",
                   textAlign: TextAlign.center,
                   style: const TextStyle(
-                    fontSize: 20,
+                    fontSize: 16,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
             ],
           ),
+
+        if (widget.data['modules'] != null)
+          for (Map<String, dynamic> doc in widget.data['modules']
+              .where((element) => element['Semester'] == "1"))
+            Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    doc['title'],
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ],
+            ),
 
         SizedBox(
           height: 20,
@@ -115,23 +134,41 @@ class _ApplyCourseState extends State<ApplyCourse> {
             ),
           ],
         ),
-        for (Map<String, dynamic> doc in widget.data['modules']
-            .where((element) => element['Semester'] == "2"))
+        if (widget.data['modules'] == null)
           Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
-                  doc['title'],
+                  "No modules listed",
                   textAlign: TextAlign.center,
                   style: const TextStyle(
-                    fontSize: 20,
+                    fontSize: 16,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
             ],
           ),
+        if (widget.data['modules'] != null)
+          for (Map<String, dynamic> doc in widget.data['modules']
+              .where((element) => element['Semester'] == "2"))
+            Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    doc['title'],
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ],
+            ),
         SizedBox(
           height: 20,
         ),
@@ -158,7 +195,7 @@ class _ApplyCourseState extends State<ApplyCourse> {
                   widget.data['duration'] ?? 'No duration',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontSize: 20,
+                    fontSize: 15,
                     fontWeight: FontWeight.w700,
                     color: HexColor("40A49C"),
                   ),
@@ -190,7 +227,7 @@ class _ApplyCourseState extends State<ApplyCourse> {
                   widget.data["Registration Fee"] ?? 'No registration fee',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontSize: 20,
+                    fontSize: 15,
                     fontWeight: FontWeight.w700,
                     color: HexColor("40A49C"),
                   ),
@@ -219,10 +256,10 @@ class _ApplyCourseState extends State<ApplyCourse> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
-                  widget.data["Total Fees"],
+                  widget.data["Total Fees"] ?? 'No tuition fee',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontSize: 20,
+                    fontSize: 15,
                     fontWeight: FontWeight.w700,
                     color: HexColor("40A49C"),
                   ),
@@ -251,10 +288,10 @@ class _ApplyCourseState extends State<ApplyCourse> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
-                  widget.data["Deposit"],
+                  widget.data["Deposit"] ?? 'No deposit',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontSize: 20,
+                    fontSize: 15,
                     fontWeight: FontWeight.w700,
                     color: HexColor("40A49C"),
                   ),

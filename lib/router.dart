@@ -10,14 +10,23 @@ import 'package:course_guide/views/home/profile/profile.dart';
 import 'package:course_guide/views/home/universities/universities.dart';
 import 'package:course_guide/views/onboarding/onboarding.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
-import 'package:hexcolor/hexcolor.dart';
 import 'package:provider/provider.dart';
-
 import 'controllers/auth.dart';
 
 final GoRouter router = GoRouter(
+  
+  redirect: (context, state) {
+    final auth = Provider.of<Auth>(context, listen: false);
+    if (auth.isAuthenticated  && state.location == '/') {
+      return '/home';
+    } else if (!auth.isAuthenticated && state.location == '/') {
+      return '/landing'; 
+    } else {
+      return null;
+    }
+  
+  },
   routes: [
     GoRoute(
       routes: [
@@ -26,10 +35,9 @@ final GoRouter router = GoRouter(
               final auth = context.watch<Auth>();
               return Scaffold(
                 key: auth.scaffoldKey,
-                body: WillPopScope(
+                body: WillPopScope( 
                   onWillPop: () {
                     return Future.value(false);
-                  
                   },
                   child: child,
                 ),
@@ -105,3 +113,6 @@ final GoRouter router = GoRouter(
     ),
   ],
 );
+
+
+// router delegate
