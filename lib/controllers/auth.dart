@@ -1,22 +1,20 @@
-import 'dart:io';
-
-import 'package:course_guide/models/db_init.dart';
-import 'package:course_guide/models/user.dart';
-import 'package:flutter/material.dart';
-// import firebase auth
-import 'package:firebase_auth/firebase_auth.dart';
-// import firebase firestore
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:go_router/go_router.dart';
-// image picker
-import 'package:image_picker/image_picker.dart';
-
-// import storage
-import 'package:firebase_storage/firebase_storage.dart';
-// import local storage
-import 'package:shared_preferences/shared_preferences.dart';
 // import json
 import 'dart:convert';
+import 'dart:io';
+
+// import firebase firestore
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:course_guide/models/db_init.dart';
+import 'package:course_guide/models/user.dart';
+// import firebase auth
+import 'package:firebase_auth/firebase_auth.dart';
+// import storage
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/material.dart';
+// image picker
+import 'package:image_picker/image_picker.dart';
+// import local storage
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Auth extends ChangeNotifier {
   // scaffold key
@@ -41,7 +39,6 @@ class Auth extends ChangeNotifier {
   }
 
   Future<void> init() async {
-
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? userData = prefs.getString('user');
     if (userData != null) {
@@ -49,7 +46,6 @@ class Auth extends ChangeNotifier {
       _isAuthenticated = true;
       notifyListeners();
     }
-
   }
 
   bool _isAuthenticated = false;
@@ -229,26 +225,18 @@ class Auth extends ChangeNotifier {
         // get user id
         final String uid = _currentUser!.uid;
         // upload file to firebase storage
-        final TaskSnapshot taskSnapshot = await FirebaseStorage.instance
-            .ref('users/$uid/profile.jpg')
-            .putFile(
-              File(path),
-            );
+        final ref = FirebaseStorage.instance.ref('users/$uid/profile.jpg');
+        await ref.putFile(File(path));
         // get download url
-        final String downloadURL = await taskSnapshot.ref.getDownloadURL();
-        // update user data in firestore
-        await FirebaseFirestore.instance
-            .collection('users')
-            .doc(uid)
-            .update(<String, dynamic>{'photoURL': downloadURL});
-        // update current user
+        final String downloadURL = await ref.getDownloadURL();
+
         _currentUser!.copyWith(photoURL: downloadURL);
         // notify listeners
         notifyListeners();
       }
     } on FirebaseException catch (e) {
       // if error is unknown
-      //throw e.message;
+      print(e.message);
     } finally {
       isloading = false;
       notifyListeners();

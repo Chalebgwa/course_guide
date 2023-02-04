@@ -57,6 +57,8 @@ dependencies:
   video_player: ^2.4.8
   shared_preferences: ^2.0.15
   back_button_interceptor: ^6.0.2
+  emailjs: ^1.1.0
+  cached_network_image: ^3.2.3
 
 dev_dependencies:
   flutter_test:

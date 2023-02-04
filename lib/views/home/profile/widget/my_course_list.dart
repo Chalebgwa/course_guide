@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:course_guide/controllers/auth.dart';
-import 'package:course_guide/models/db_init.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:provider/provider.dart';
@@ -65,48 +64,62 @@ class _MyCourseListState extends State<MyCourseList> {
                         padding: const EdgeInsets.all(8.0),
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(10),
-                          child: ExpansionTile(
+                          child: ListTile(
                             textColor: Colors.white,
                             // ignore: sort_child_properties_last
-                            children: [
-                              // if(doc.data().containsKey("modules"))
-                              // for(Map<String,dynamic> doc2 in data[0]["modules"])Me
-                              // ListTile(
-                              //   title: Text(doc2["title"]),
-                              //   subtitle: Text("0"),
-                              //   trailing: IconButton(
-                              //     onPressed: () {
-                              //       toggleVideo();
-                              //     },
-                              //     icon: Icon(
-                              //       _controller.value.isPlaying
-                              //           ? Icons.pause
-                              //           : Icons.play_arrow,
-                              //     ),
-                              //   ),
-                              
-                              // )
-
-                           
-                              
-                              // _controller.value.isInitialized ? ClipRRect(
-                              //   child: SizedBox(
-                              //     height: 300,
-                              //     width: 400,
-                              //     child: VideoPlayer(_controller),
-                              //   ),
-                              // ) : Container(), 
-                            ],
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
                             leading: Icon(
                               Icons.book,
                               color: Colors.white,
+                              size: 40,
                             ),
-                            backgroundColor: HexColor("#40A49C"),
-                            collapsedTextColor: Colors.white,
-                            title: Text(
-                              "${doc.data()["title"]}",
+                            tileColor: HexColor("#40A49C"),
+                            //collapsedTextColor: Colors.white,
+                            title: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                "${doc.data()["title"]}",
+                              ),
                             ),
-                            collapsedBackgroundColor: HexColor("#40A49C"),
+                            trailing: IconButton(
+                              onPressed: () {
+                                // pop up menu with delete option
+                                showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return AlertDialog(
+                                        title: const Text("Delete"),
+                                        content: const Text(
+                                            "Are you sure you want to delete this course?"),
+                                        actions: [
+                                          TextButton(
+                                              onPressed: () {
+                                                Navigator.pop(context);
+                                              },
+                                              child: const Text("Cancel")),
+                                          TextButton(
+                                              onPressed: () {
+                                                FirebaseFirestore.instance
+                                                    .collection('users')
+                                                    .doc(auth.currentUser!.uid)
+                                                    .collection('mylist')
+                                                    .doc(doc.id)
+                                                    .delete();
+                                                Navigator.pop(context);
+                                              },
+                                              child: const Text("Delete"))
+                                        ],
+                                      );
+                                    });
+                              },
+                              icon: Icon(
+                                Icons.more_vert,
+                                color: Colors.white,
+                              ),
+                            ),
+                            //collapsedBackgroundColor: HexColor("#40A49C"),
                           ),
                         ),
                       ),

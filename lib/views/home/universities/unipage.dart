@@ -13,7 +13,7 @@ class Unipage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(uni[""]),
+        title: Text(uni["name"]),
       ),
       body: GridView.custom(
         semanticChildCount: 1,
@@ -30,12 +30,34 @@ class Unipage extends StatelessWidget {
           ],
         ),
         childrenDelegate: SliverChildBuilderDelegate(
-          (context, index) => Container(
-            decoration: BoxDecoration(
-              color: Colors.blue,
-              image: DecorationImage(
-                image: NetworkImage(images[index]),
-                fit: BoxFit.cover,
+          (context, index) => InkWell(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => Scaffold(
+                    appBar: AppBar(
+                      backgroundColor: Colors.black,
+                      elevation: 0,
+                    ),
+                    backgroundColor: Colors.black,
+                    body: Center(
+                      child: Image.network(
+                        images[index],
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            },
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.blue,
+                image: DecorationImage(
+                  image: NetworkImage(images[index]),
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
           ),

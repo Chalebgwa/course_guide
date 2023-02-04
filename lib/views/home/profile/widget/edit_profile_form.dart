@@ -15,7 +15,7 @@ class ProfileForm extends ChangeNotifier {
   ProfileForm(this.auth)
       : fullname = ValidationItem(value: auth.currentUser!.name),
         email = ValidationItem(value: auth.currentUser!.email),
-       // phone = ValidationItem(value: auth.currentUser!.),
+        phone = ValidationItem(value: auth.currentUser!.phone),
         username = ValidationItem(value: auth.currentUser!.name);
 
   void changeFullname(String value) {
@@ -85,37 +85,39 @@ class ProfileForm extends ChangeNotifier {
         username: username.value,
       );
 
-      showDialog(context: auth.scaffoldKey.currentContext!, builder: (context) {
-        return AlertDialog(
-          title: Text('Success'),
-          content: Text('Profile updated successfully'),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: Text('Ok'),
-            ),
-          ],
-        );
-      });
+      showDialog(
+          context: auth.scaffoldKey.currentContext!,
+          builder: (context) {
+            return AlertDialog(
+              title: Text('Success'),
+              content: Text('Profile updated successfully'),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text('Ok'),
+                ),
+              ],
+            );
+          });
     } else {
-
-      showDialog(context: auth.scaffoldKey.currentContext!, builder: (context) {
-        return AlertDialog(
-          title: Text('Error'),
-          content: Text('Please fill all fields'),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: Text('Ok'),
-            ),
-          ],
-        );
-      });
-
+      showDialog(
+          context: auth.scaffoldKey.currentContext!,
+          builder: (context) {
+            return AlertDialog(
+              title: Text('Error'),
+              content: Text('Please fill all fields'),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text('Ok'),
+                ),
+              ],
+            );
+          });
     }
   }
 }

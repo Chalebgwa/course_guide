@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:course_guide/views/global_widgets/input_text.dart';
 import 'package:course_guide/views/home/profile/widget/edit_profile_form.dart';
 import 'package:flutter/material.dart';
@@ -51,21 +49,22 @@ class _EditProfileViewState extends State<EditProfileView> {
                     height: 10,
                   ),
 
-                   TextInput(
+                  TextInput(
                     label: "Full Name",
                     error: form.fullname.error,
                     onChanged: form.changeFullname,
                     value: form.fullname.value,
-                  ), TextInput(
+                  ),
+                  TextInput(
                     label: "Username",
                     error: form.username.error,
                     onChanged: form.changeUsername,
                     value: form.username.value,
                   ),
-                 
+
                   TextInput(
                     label: "Email",
-                    error: form.email.error,  
+                    error: form.email.error,
                     onChanged: form.changeEmail,
                     value: form.email.value,
                   ),

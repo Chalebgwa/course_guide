@@ -1,4 +1,4 @@
-import 'package:badges/badges.dart';
+import 'package:badges/badges.dart' as Badge;
 import 'package:course_guide/controllers/nav_control.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -100,7 +100,7 @@ class BottomNavButton extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Badge(
+          Badge.Badge(
             showBadge: isActive,
             badgeColor: Colors.yellow.withOpacity(.4),
             badgeContent: Container(
