@@ -180,7 +180,7 @@ class _BookAppointScreenState extends State<BookAppointScreen> {
                     'to_name': widget.consultDoc['name'],
                     "message":
                         "You have a new appointment on ${DateFormat.yMd().format(_selectedDay)} at $_selectedTime, please check your calendar and confirm the appointment. respond to email, ${auth.currentUser!.email} or call ${auth.currentUser!.phone} to confirm appointment.",
-                    "email": "blackcrown.bc@gmail.com",
+                    "email": widget.consultDoc['email'],
                   };
 
                   try {
