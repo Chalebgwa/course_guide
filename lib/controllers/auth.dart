@@ -232,6 +232,13 @@ class Auth extends ChangeNotifier {
 
         _currentUser!.copyWith(photoURL: downloadURL);
         // notify listeners
+        // update user data in firestore
+        FirebaseFirestore.instance
+            .collection('users')
+            .doc(uid)
+            .update(<String, dynamic>{
+          'photoURL': downloadURL,
+        });
         notifyListeners();
       }
     } on FirebaseException catch (e) {
