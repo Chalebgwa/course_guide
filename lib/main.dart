@@ -23,7 +23,9 @@ void main() async {
   final Auth auth = Auth();
   await auth.init();
 
-  runApp(MyApp(auth: auth,));
+  runApp(MyApp(
+    auth: auth,
+  ));
 }
 
 class MyApp extends StatefulWidget {
@@ -36,29 +38,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  
-  // This widget is the root of your application.
-
-  @override
-  void initState() {
-    super.initState();
-    BackButtonInterceptor.add(myInterceptor);
-  }
-
-  @override
-  void dispose() {
-    BackButtonInterceptor.remove(myInterceptor);
-    super.dispose();
-  }
-
-  Future<bool> myInterceptor(bool stopDefaultButtonEvent, RouteInfo info) async {
-    if (info.currentRoute(context)?.settings.name == '/home') {
-      return true;
-    }
-    
-    return false;
-  }
-
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -79,7 +58,6 @@ class _MyAppState extends State<MyApp> {
               ChangeNotifierProvider(create: (_) => ProfileForm(widget.auth)),
             ],
             child: MaterialApp.router(
-              
               title: 'Course Guide',
               theme: ThemeData(
                 colorScheme: ColorScheme.light(
@@ -87,9 +65,7 @@ class _MyAppState extends State<MyApp> {
                   secondary: HexColor('#FDE84C'),
                 ),
               ),
-              routerDelegate: router.routerDelegate,
-              routeInformationProvider: router.routeInformationProvider,
-              routeInformationParser: router.routeInformationParser,
+              routerConfig: router,
             ),
           );
         });

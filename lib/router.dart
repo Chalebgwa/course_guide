@@ -1,3 +1,4 @@
+import 'package:course_guide/controllers/nav_control.dart';
 import 'package:course_guide/views/authentication/forgot_password.dart';
 import 'package:course_guide/views/authentication/landing.dart';
 import 'package:course_guide/views/authentication/sign_in.dart';
@@ -15,17 +16,15 @@ import 'package:provider/provider.dart';
 import 'controllers/auth.dart';
 
 final GoRouter router = GoRouter(
-  
   redirect: (context, state) {
     final auth = Provider.of<Auth>(context, listen: false);
-    if (auth.isAuthenticated  && state.location == '/') {
+    if (auth.isAuthenticated && state.location == '/') {
       return '/home';
     } else if (!auth.isAuthenticated && state.location == '/') {
-      return '/landing'; 
+      return '/landing';
     } else {
       return null;
     }
-  
   },
   routes: [
     GoRoute(
@@ -35,9 +34,15 @@ final GoRouter router = GoRouter(
               final auth = context.watch<Auth>();
               return Scaffold(
                 key: auth.scaffoldKey,
-                body: WillPopScope( 
-                  onWillPop: () {
-                    return Future.value(false);
+                body: WillPopScope(
+                  onWillPop: () async {
+                    final nav = context.read<NavController>();
+                    if (nav.currentRoute == "/home") {
+                      return true;
+                    } else {
+                      context.go('/home');
+                      return false;
+                    }
                   },
                   child: child,
                 ),
