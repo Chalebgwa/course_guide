@@ -19,333 +19,306 @@ class ApplyCourse extends StatefulWidget {
 class _ApplyCourseState extends State<ApplyCourse> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: ListView(
-      children: [
-        // lorem ipsum text description
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(
-            widget.data['title'],
-            textAlign: TextAlign.center,
-            style: const TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-        Row(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                " Description",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w700,
-                  color: HexColor("40A49C"),
-                ),
+    return SafeArea(
+      child: Scaffold(
+          body: ListView(
+        physics: BouncingScrollPhysics(),
+        children: [
+          // lorem ipsum text description
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              widget.data['title'],
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
               ),
             ),
-          ],
-        ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(
-            widget.data['description'] ?? 'No description',
-            textAlign: TextAlign.center,
-            style: const TextStyle(
-              fontSize: 10,
-              fontWeight: FontWeight.bold,
-            ),
           ),
-        ),
-        Row(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                "Modules Year 1, Semester 1",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w700,
-                  color: HexColor("40A49C"),
-                ),
-              ),
-            ),
-          ],
-        ),
-        if (widget.data['modules'] == null)
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  "No modules listed",
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ],
-          ),
-
-        if (widget.data['modules'] != null)
-          for (Map<String, dynamic> doc in widget.data['modules']
-              .where((element) => element['Semester'] == "1"))
+          if (widget.data['description'] != null)
             Row(
               children: [
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
-                    doc['title'],
+                    "Description",
                     textAlign: TextAlign.center,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 20,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.w700,
+                      color: HexColor("40A49C"),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          if (widget.data['description'] != null)
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                widget.data['description'] ?? 'No description',
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  fontSize: 10,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          if (widget.data['modules'] != null)
+            Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    "Modules Year 1, Semester 1",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w700,
+                      color: HexColor("40A49C"),
                     ),
                   ),
                 ),
               ],
             ),
 
-        SizedBox(
-          height: 20,
-        ),
-
-        Row(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                "Modules Year 1, Semester 2",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w700,
-                  color: HexColor("40A49C"),
-                ),
-              ),
-            ),
-          ],
-        ),
-        if (widget.data['modules'] == null)
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  "No modules listed",
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
+          if (widget.data['modules'] != null)
+            for (Map<String, dynamic> doc in widget.data['modules']
+                .where((element) => element['Semester'] == "1"))
+              Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      doc['title'],
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
-                ),
+                ],
               ),
-            ],
+
+          SizedBox(
+            height: 20,
           ),
-        if (widget.data['modules'] != null)
-          for (Map<String, dynamic> doc in widget.data['modules']
-              .where((element) => element['Semester'] == "2"))
+          if (widget.data['modules'] != null)
             Row(
               children: [
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
-                    doc['title'],
+                    "Modules Year 1, Semester 2",
                     textAlign: TextAlign.center,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 20,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.w700,
+                      color: HexColor("40A49C"),
                     ),
                   ),
                 ),
               ],
             ),
-        SizedBox(
-          height: 20,
-        ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  "Duration",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w700,
-                    color: HexColor("40A49C"),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  widget.data['duration'] ?? 'No duration',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.w700,
-                    color: HexColor("40A49C"),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  "Registration Fee",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w700,
-                    color: HexColor("40A49C"),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  widget.data["Registration Fee"] ?? 'No registration fee',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.w700,
-                    color: HexColor("40A49C"),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  "Tuition Fee",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w700,
-                    color: HexColor("40A49C"),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  widget.data["Total Fees"] ?? 'No tuition fee',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.w700,
-                    color: HexColor("40A49C"),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  "Deposit",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w700,
-                    color: HexColor("40A49C"),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  widget.data["Deposit"] ?? 'No deposit',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.w700,
-                    color: HexColor("40A49C"),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
 
-        //SzieBox
-        SizedBox(
-          height: 40,
-        ),
+          if (widget.data['modules'] != null)
+            for (Map<String, dynamic> doc in widget.data['modules']
+                .where((element) => element['Semester'] == "2"))
+              Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      doc['title'],
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+          SizedBox(
+            height: 20,
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    "Duration",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w700,
+                      color: HexColor("40A49C"),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    widget.data['duration'] ?? 'No duration',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w700,
+                      color: HexColor("40A49C"),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    "Registration Fee",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w700,
+                      color: HexColor("40A49C"),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    widget.data["Registration Fee"] ?? 'No registration fee',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w700,
+                      color: HexColor("40A49C"),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    "Tuition Fee",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w700,
+                      color: HexColor("40A49C"),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    widget.data["Total Fees"] ?? 'No tuition fee',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w700,
+                      color: HexColor("40A49C"),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    "Deposit",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w700,
+                      color: HexColor("40A49C"),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    widget.data["Deposit"] ?? 'No deposit',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w700,
+                      color: HexColor("40A49C"),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
 
-        // button to apply
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: ElevatedButton(
-            onPressed: () async {
-              final auth = Provider.of<Auth>(context, listen: false);
-              // add to my courses
-              FirebaseFirestore.instance
-                  .collection("users")
-                  .doc(auth.currentUser?.uid)
-                  .collection("mylist")
-                  .doc(widget.data['title'])
-                  .set(widget.data);
+          //SzieBox
+          SizedBox(
+            height: 40,
+          ),
 
-              await showDialog(
-                  context: context,
-                  builder: (context) => AlertDialog(
-                        title: Text("Success"),
-                        content: Text(
-                            "Course added to your list, you can now apply for this course"),
-                        actions: [
-                          TextButton(
-                              onPressed: () => Navigator.pop(context),
-                              child: Text("OK"))
-                        ],
-                      ));
-              launchUrl(Uri.parse("https://www.orimi.com/pdf-test.pdf"));
-            },
-            child: const Text("Apply"),
-            style: ElevatedButton.styleFrom(
-              primary: HexColor("40A49C"),
-              onPrimary: Colors.white,
-              fixedSize: const Size(200, 50),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(32.0),
+          // button to apply
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: ElevatedButton(
+              onPressed: () async {
+                final auth = Provider.of<Auth>(context, listen: false);
+                // add to my courses
+                FirebaseFirestore.instance
+                    .collection("users")
+                    .doc(auth.currentUser?.uid)
+                    .collection("mylist")
+                    .doc(widget.data['title'])
+                    .set(widget.data);
+
+                await showDialog(
+                    context: context,
+                    builder: (context) => AlertDialog(
+                          title: Text("Success"),
+                          content: Text(
+                              "Course added to your list, you can now apply for this course"),
+                          actions: [
+                            TextButton(
+                                onPressed: () => Navigator.pop(context),
+                                child: Text("OK"))
+                          ],
+                        ));
+                launchUrl(Uri.parse("https://www.orimi.com/pdf-test.pdf"));
+              },
+              child: const Text("Apply"),
+              style: ElevatedButton.styleFrom(
+                primary: HexColor("40A49C"),
+                onPrimary: Colors.white,
+                fixedSize: const Size(200, 50),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(32.0),
+                ),
               ),
             ),
           ),
-        ),
-      ],
-    ));
+        ],
+      )),
+    );
   }
 }
