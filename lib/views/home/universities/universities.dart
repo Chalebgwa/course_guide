@@ -2,10 +2,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:course_guide/views/home/home/course_list.dart';
 import 'package:course_guide/views/home/universities/advice_forums.dart';
 import 'package:course_guide/views/home/universities/course_list.dart';
+import 'package:course_guide/views/home/universities/guc_form/guc_form.dart';
 import 'package:course_guide/views/home/universities/unipage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class Universities extends StatelessWidget {
@@ -63,11 +65,12 @@ class UniCard extends StatelessWidget {
       child: GestureDetector(
         onTap: () {
           final docId = uni["docId"];
+
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) =>Unipage(
-               uni: uni,
+              builder: (context) => Unipage(
+                uni: uni,
               ),
             ),
           );
@@ -142,7 +145,10 @@ class UniCard extends StatelessWidget {
                         ElevatedButton(
                           onPressed: () {
                             final docId = uni["docId"];
-      
+                            context
+                                .read<GucForm>()
+                                .changeCurrentCourse(uni["name"]);
+                            context.read<GucForm>().changeUrl(uni["pdf"]);
                             Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -177,7 +183,8 @@ class UniCard extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => AdviceForums(docId: docId),
+                                builder: (context) =>
+                                    AdviceForums(docId: docId),
                               ),
                             );
                           },

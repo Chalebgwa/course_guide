@@ -1,10 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:course_guide/controllers/auth.dart';
 import 'package:course_guide/views/home/universities/apply_course.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:provider/provider.dart';
 
 class CoursesList extends StatefulWidget {
   const CoursesList(
@@ -42,7 +40,7 @@ class _CoursesListState extends State<CoursesList> {
             fontWeight: FontWeight.bold,
           ),
         ),
-        leadingWidth: 200,
+        leadingWidth: 160,
         leading: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Row(
