@@ -6,13 +6,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class CourseList extends StatelessWidget {
-  const CourseList({Key? key, required this.fitered}) : super(key: key);
-  final List<String> fitered;
+  const CourseList({Key? key, required this.filter}) : super(key: key);
+  final String? filter;
 
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<List<Course>>(
-        stream: CourseController().streamCourses(fitered),
+        stream: CourseController().streamCourses(filter),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return const Center(child: CircularProgressIndicator());
@@ -40,7 +40,7 @@ class CourseCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Colors.transparent,
+      // color: Colors.grey,
       child: InkWell(
         onTap: () {
           // show course info as dialog
@@ -51,16 +51,19 @@ class CourseCard extends StatelessWidget {
               });
         },
         child: Hero(
-          tag: course.id,
+          tag: course.id ?? course,
           child: Container(
             height: 280.h,
             width: 235.w,
             decoration: BoxDecoration(
+              color: Colors.grey,
               borderRadius: BorderRadius.circular(20.r),
-              image: DecorationImage(
-                image: NetworkImage(course.imageUrl),
-                fit: BoxFit.cover,
-              ),
+              image: course.imageUrl != null
+                  ? DecorationImage(
+                      image: NetworkImage(course.imageUrl!),
+                      fit: BoxFit.cover,
+                    )
+                  : null,
             ),
             child: Padding(
               padding: EdgeInsets.all(20.0.w),
@@ -71,7 +74,6 @@ class CourseCard extends StatelessWidget {
                     width: 79.w,
                     height: 33.h,
                     decoration: BoxDecoration(
-                      color: Colors.transparent,
                       borderRadius: BorderRadius.circular(20.r),
                       border: Border.all(
                         color: Colors.white,
@@ -79,7 +81,7 @@ class CourseCard extends StatelessWidget {
                     ),
                     alignment: Alignment.center,
                     child: Text(
-                      course.state,
+                      course.state ?? "",
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 12.sp,
@@ -88,7 +90,7 @@ class CourseCard extends StatelessWidget {
                     ),
                   ),
                   Spacer(),
-                  Text(course.title,
+                  Text(course.title ?? "",
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 16.sp,

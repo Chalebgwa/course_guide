@@ -1,9 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:course_guide/controllers/auth.dart';
-import 'package:course_guide/models/db_init.dart';
 import 'package:course_guide/views/home/universities/guc_form/guc_form.dart';
 import 'package:course_guide/views/home/universities/guc_form/guc_form_view.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:provider/provider.dart';
@@ -627,9 +625,9 @@ class _ApplyCourseState extends State<ApplyCourse> {
                     await showDialog(
                         context: context,
                         builder: (context) => AlertDialog(
-                              title: Text("Error"),
+                              title: Text("Oops"),
                               content: Text(
-                                  "No pdf found for this course, please contact the university"),
+                                  "Application form is not available for this university"),
                               actions: [
                                 TextButton(
                                     onPressed: () => Navigator.pop(context),

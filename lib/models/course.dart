@@ -1,73 +1,107 @@
 class Course {
-  final String id;
-  final String title;
-  final String description;
-  final String imageUrl;
-  final List<String> category;
-  final String state;
-  final int enrolled;
-  final int graduated;
-  final String url;
-  final List<String> tags;
+  final String? id;
+  final String? title;
+  final String? uniId;
+  final String? applicationFee;
+  final String? careerOpportunities;
+  final String? category;
+  final String? courseType;
+  final String? description;
+  final String? duration;
+  final String? enrolled;
+  final String? faculty;
+  final String? featured;
+  final String? graduated;
+  final String? imageUrl;
+  final String? requirements;
+  final String? state;
+  final String? whatCanYouStudy;
+  final String? installments;
+  final String? totalFee;
+  final String? finalExamFee;
+  final String? midSemesterFee;
+  final String? deposit;
 
-  Course(this.id, this.title, this.description, this.imageUrl, this.category, this.state, this.enrolled, this.graduated, this.url, this.tags);
+  Course(
+    this.id,
+    this.title,
+    this.uniId,
+    this.applicationFee,
+    this.careerOpportunities,
+    this.category,
+    this.courseType,
+    this.description,
+    this.duration,
+    this.enrolled,
+    this.faculty,
+    this.featured,
+    this.graduated,
+    this.imageUrl,
+    this.requirements,
+    this.state,
+    this.whatCanYouStudy,
+    this.installments,
+    this.totalFee,
+    this.finalExamFee,
+    this.midSemesterFee,
+    this.deposit,
+  );
 
-  Course.fromJson(Map<String, dynamic> json, )
-      : id = json['id'],
-        title = json['title'],
-        description = json['description'],
-        imageUrl = json['imageUrl'],
-        category = json['category'].cast<String>(),
-        state = json['state'],
-        enrolled = json['enrolled'],
-        url = json['url'],
-        graduated = json['graduated'],
-        tags = json['tags'].cast<String>();
-
-
-  Map<String, dynamic> toJson() => {
-        'id': id,
-        'title': title,
-        'description': description,
-        'imageUrl': imageUrl,
-        'category': category,
-        'state': state,
-        'enrolled': enrolled,
-        'graduated': graduated,
-        'url': url,
-         "tags": tags,
-      };  
-
-
-      // Copy with method
-  Course copyWith({
-    String? id,
-    String? title,
-    String? description,
-    String? imageUrl,
-    List<String>? category,
-    String? state,
-    int? enrolled,
-    int? graduated,
-    String? url,
-    List<String>? tags,
-  }) {
+  // fromJson
+  factory Course.fromJson(Map<String, dynamic> json) {
     return Course(
-      id ?? this.id,
-      title ?? this.title,
-      description ?? this.description,
-      imageUrl ?? this.imageUrl,
-      category ?? this.category,
-      state ?? this.state,
-      enrolled ?? this.enrolled,
-      graduated ?? this.graduated,
-      url ?? this.url,
-      tags ?? this.tags,
+      json['id'],
+      json['title'],
+      json['uniId'],
+      json['applicationFee'],
+      json['careerOpportunities'],
+      json['category'],
+      json['courseType'],
+      json['description'],
+      json['duration'],
+      json['enrolled'],
+      json['faculty'],
+      json['featured'],
+      json['graduated'],
+      json['imageUrl'],
+      json['requirements'],
+      json['state'],
+      json['whatCanYouStudy'],
+      json['installments'],
+      json['totalFee'],
+      json['finalExamFee'],
+      json['midSemesterFee'],
+      json['deposit'],
     );
   }
 
- @override
-  String toString() {
-    return title;
+  // toJson
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'title': title,
+      'applicationFee': applicationFee,
+      'careerOpportunities': careerOpportunities,
+      'category': category,
+      'courseType': courseType,
+      'description': description,
+      'duration': duration,
+      'enrolled': enrolled,
+      'faculty': faculty,
+      'featured': featured,
+      'uniId': uniId,
+      'graduated': graduated,
+      'imageUrl': imageUrl,
+      'requirements': requirements,
+      'state': state,
+      'whatCanYouStudy': whatCanYouStudy,
+      'installments': installments,
+      'totalFee': totalFee,
+      'finalExamFee': finalExamFee,
+      'midSemesterFee': midSemesterFee,
+      'deposit': deposit,
+    };
   }
+
+  // copyWith
 }

@@ -14,7 +14,12 @@ class CourseController extends ChangeNotifier {
         handleData: (QuerySnapshot<Map<String, dynamic>> snapshot, sink) {
       courses.clear();
       snapshot.docs.forEach((doc) {
-        courses.add(Course.fromJson(doc.data()));
+        print(doc.reference.path);
+        final uniId = doc.reference.parent.parent?.id;
+        final id = doc.reference.id;
+
+        courses.add(
+            Course.fromJson(doc.data()..addAll({"uniId": uniId, "id": id})));
       });
       sink.add(courses);
     });
@@ -23,7 +28,7 @@ class CourseController extends ChangeNotifier {
   void filterCourses(String category) {
     filteredCourses.clear();
     for (var course in courses) {
-      if (course.category.contains(category)) {
+      if (course.category != null && course.category!.contains(category)) {
         filteredCourses.add(course);
       }
     }
@@ -53,17 +58,25 @@ class CourseController extends ChangeNotifier {
   List<Course> get allCourses => courses;
 
   //stream courses from firebase and add to courses list
-  Stream<List<Course>> streamCourses(List<String> categories) {
+  Stream<List<Course>> streamCourses(String? category) {
     // get courses from firebase
     late Stream<QuerySnapshot<Map<String, dynamic>>> stream;
 
-    if(categories.isEmpty) {
-      stream = FirebaseFirestore.instance.collection('courses').snapshots();
-    } else {
-      stream = FirebaseFirestore.instance
-          .collection('courses')
-          .where('tags', arrayContainsAny: categories)
-          .snapshots();
+    try {
+      if (category == null) {
+        stream = FirebaseFirestore.instance
+            .collectionGroup("courses")
+            //.where("featured", isEqualTo: "true")
+            .snapshots();
+      } else {
+        stream = FirebaseFirestore.instance
+            .collectionGroup('courses')
+            .where('category', isEqualTo: category)
+            .where("featured", isEqualTo: "true")
+            .snapshots();
+      }
+    } catch (e) {
+      print(e);
     }
 
     // transform stream

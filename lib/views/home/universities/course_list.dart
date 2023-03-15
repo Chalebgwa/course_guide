@@ -22,7 +22,6 @@ class _CoursesListState extends State<CoursesList> {
   TextEditingController _searchController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    print(widget.docId);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: HexColor("40A49C"),
@@ -107,58 +106,192 @@ class _CoursesListState extends State<CoursesList> {
               .collection("courses")
               .snapshots(),
           builder: (context, snapshot) {
+            if (!snapshot.hasData) {
+              return Center(child: Text("Loading.."));
+            }
             return CustomScrollView(
               slivers: [
-                //list of expansion tiles
-                SliverToBoxAdapter(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
-                      child: ExpansionTile(
-                        title: const Text("Undergraduate Programs"),
-                        collapsedBackgroundColor: HexColor("40A49C"),
-                        textColor: Colors.white,
-                        iconColor: Colors.white,
-                        collapsedIconColor: Colors.white,
-                        collapsedTextColor: Colors.white,
-                        backgroundColor: HexColor("40A49C"),
-                        children: [
-                          for (DocumentSnapshot<Map<String, dynamic>> doc
-                              in snapshot.data?.docs ?? [])
-                            Card(
-                                child: ListTile(
-                                    tileColor: HexColor("#FFFFFF"),
-                                    onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => ApplyCourse(
-                                            data: doc.data()!,
-                                          ),
-                                        ),
-                                      );
-                                    },
-                                    // traing icon to add my list
-
-                                    title: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Text(
-                                        doc.data()!["title"],
-                                        style: const TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 15,
-                                        ),
-                                      ),
-                                    )))
-                        ],
-                      ),
-                    ),
-                  ),
-                )
+                if (widget.name == "GUC") buildGUC(snapshot, context),
+                //buildAccordion(snapshot.data!.docs, context)
               ],
             );
           }),
+    );
+  }
+
+  SliverToBoxAdapter buildAccordion(
+      List<QueryDocumentSnapshot<Map<String, dynamic>>> docs,
+      BuildContext context) {
+    return SliverToBoxAdapter(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(10),
+          child: ExpansionTile(
+            title: const Text("Undergraduate Programs"),
+            collapsedBackgroundColor: HexColor("40A49C"),
+            textColor: Colors.white,
+            iconColor: Colors.white,
+            collapsedIconColor: Colors.white,
+            collapsedTextColor: Colors.white,
+            backgroundColor: HexColor("40A49C"),
+            children: [
+              for (DocumentSnapshot<Map<String, dynamic>> doc in docs)
+                buildCourseCard(context, doc)
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Card buildCourseCard(
+      BuildContext context, DocumentSnapshot<Map<String, dynamic>> doc) {
+    return Card(
+        child: ListTile(
+            tileColor: HexColor("#FFFFFF"),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ApplyCourse(
+                    data: doc.data()!,
+                  ),
+                ),
+              );
+            },
+            // traing icon to add my list
+
+            title: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                doc.data()!["title"],
+                style: const TextStyle(
+                  color: Colors.black,
+                  fontSize: 15,
+                ),
+              ),
+            )));
+  }
+
+  buildGUC(AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot,
+      BuildContext context) {
+    return SliverToBoxAdapter(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(10),
+          child: Column(
+            children: [
+              ExpansionTile(
+                title: const Text("Diploma"),
+                collapsedBackgroundColor: HexColor("40A49C"),
+                textColor: Colors.white,
+                iconColor: Colors.white,
+                collapsedIconColor: Colors.white,
+                collapsedTextColor: Colors.white,
+                backgroundColor: HexColor("40A49C"),
+                children: [
+                  if (snapshot.data!.docs
+                      .where((element) =>
+                          element.data()["courseType"] == "Diploma")
+                      .isEmpty)
+                    Card(
+                      child: ListTile(
+                        title: Text("There are no courses listed"),
+                      ),
+                    ),
+                  for (DocumentSnapshot<Map<String, dynamic>> doc
+                      in snapshot.data!.docs.where((element) =>
+                          element.data()["courseType"] == "Diploma"))
+                    buildCourseCard(context, doc)
+                ],
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              ExpansionTile(
+                title: const Text("Bachelors"),
+                collapsedBackgroundColor: HexColor("40A49C"),
+                textColor: Colors.white,
+                iconColor: Colors.white,
+                collapsedIconColor: Colors.white,
+                collapsedTextColor: Colors.white,
+                backgroundColor: HexColor("40A49C"),
+                children: [
+                  if (snapshot.data!.docs
+                      .where((element) =>
+                          element.data()["courseType"] == "Bachelors")
+                      .isEmpty)
+                    Card(
+                      child: ListTile(
+                        title: Text("There are no courses listed"),
+                      ),
+                    ),
+                  for (DocumentSnapshot<Map<String, dynamic>> doc
+                      in snapshot.data!.docs.where((element) =>
+                          element.data()["courseType"] == "Degree"))
+                    buildCourseCard(context, doc)
+                ],
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              ExpansionTile(
+                title: const Text("Certificate"),
+                collapsedBackgroundColor: HexColor("40A49C"),
+                textColor: Colors.white,
+                iconColor: Colors.white,
+                collapsedIconColor: Colors.white,
+                collapsedTextColor: Colors.white,
+                backgroundColor: HexColor("40A49C"),
+                children: [
+                  if (snapshot.data!.docs
+                      .where((element) =>
+                          element.data()["courseType"] == "Certificate")
+                      .isEmpty)
+                    Card(
+                      child: ListTile(
+                        title: Text("There are no courses listed"),
+                      ),
+                    ),
+                  for (DocumentSnapshot<Map<String, dynamic>> doc
+                      in snapshot.data!.docs.where((element) =>
+                          element.data()["courseType"] == "Certificate"))
+                    buildCourseCard(context, doc)
+                ],
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              ExpansionTile(
+                title: const Text("Masters"),
+                collapsedBackgroundColor: HexColor("40A49C"),
+                textColor: Colors.white,
+                iconColor: Colors.white,
+                collapsedIconColor: Colors.white,
+                collapsedTextColor: Colors.white,
+                backgroundColor: HexColor("40A49C"),
+                children: [
+                  if (snapshot.data!.docs
+                      .where((element) =>
+                          element.data()["courseType"] == "Masters")
+                      .isEmpty)
+                    Card(
+                      child: ListTile(
+                        title: Text("There are no courses listed"),
+                      ),
+                    ),
+                  for (DocumentSnapshot<Map<String, dynamic>> doc
+                      in snapshot.data!.docs.where((element) =>
+                          element.data()["courseType"] == "Masters"))
+                    buildCourseCard(context, doc)
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

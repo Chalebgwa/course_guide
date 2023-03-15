@@ -20,11 +20,10 @@ class SearchController extends ChangeNotifier {
     notifyListeners();
   }
 
-  // search for a user, course or instructor  
+  // search for a user, course or instructor
   Future<List<dynamic>> search(String query) async {
-
     final news = await _searchNews(query);
-   
+
     // get scholarships
     final scholarships = await _searchScholarships(query);
     // get courses
@@ -32,7 +31,7 @@ class SearchController extends ChangeNotifier {
     // get instructors
     //final List<Instructor> instructors = await _searchInstructors(query);
     // return list of users, courses and instructors
-    return [ ...courses, ...scholarships, ...news];
+    return [...courses, ...scholarships, ...news];
   }
 
   // search for users
@@ -74,13 +73,14 @@ class SearchController extends ChangeNotifier {
     // filter courses
     final List<Course> filteredCourses = courses
         .where((Course course) =>
-            course.title.toLowerCase().contains(query.toLowerCase()) ||
-            course.description.contains(query.toLowerCase()))
+            course.title!.toLowerCase().contains(query.toLowerCase()) ||
+            (course.description != null &&
+                course.description!.contains(query.toLowerCase())))
         .toList();
 
     return filteredCourses;
   }
-  
+
   Future<List<Scholarships>> _searchScholarships(String query) async {
     // get courses from firestore
     final QuerySnapshot<Map<String, dynamic>> querySnapshot =
@@ -102,7 +102,7 @@ class SearchController extends ChangeNotifier {
 
     return filteredScholarships;
   }
-  
+
   Future<List<News>> _searchNews(String query) async {
     // get courses from firestore
     final QuerySnapshot<Map<String, dynamic>> querySnapshot =
@@ -124,5 +124,4 @@ class SearchController extends ChangeNotifier {
 
     return filteredNews;
   }
-  
 }

@@ -1,16 +1,20 @@
 class Scholarships {
-
   final String id;
   final String title;
   final String description;
   final String image;
   final String link;
 
-  Scholarships({required this.id, required this.title, required this.description, required this.image, required this.link});
+  Scholarships(
+      {required this.id,
+      required this.title,
+      required this.description,
+      required this.image,
+      required this.link});
 
   factory Scholarships.fromJson(Map<String, dynamic> json) {
     return Scholarships(
-      id: json['id'],
+      id: json['id'] ?? json.hashCode.toString(),
       title: json['title'],
       description: json['description'],
       image: json['imageUrl'],
@@ -46,9 +50,6 @@ class Scholarships {
 
   @override
   String toString() {
-    
     return title;
-    
   }
-  
 }

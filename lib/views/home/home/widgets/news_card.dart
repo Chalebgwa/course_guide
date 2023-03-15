@@ -4,16 +4,21 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 class NewList extends StatelessWidget {
-  const NewList({Key? key,  required this.fitered}) : super(key: key);
+  const NewList({Key? key, required this.fitered}) : super(key: key);
 
-  final List<String> fitered;
+  final String? fitered;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       height: 350.h,
       child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-        stream: fitered.isNotEmpty ? FirebaseFirestore.instance.collection('news').where("tags", arrayContainsAny: fitered).snapshots() : FirebaseFirestore.instance.collection('news').snapshots(),
+        stream: fitered != null
+            ? FirebaseFirestore.instance
+                .collection('news')
+                .where("category", isEqualTo: fitered)
+                .snapshots()
+            : FirebaseFirestore.instance.collection('news').snapshots(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return const Center(child: CircularProgressIndicator());
@@ -21,8 +26,11 @@ class NewList extends StatelessWidget {
           return ListView.builder(
             scrollDirection: Axis.horizontal,
             itemCount: snapshot.data!.docs.length,
-            itemBuilder: (context, index) => NewsCard(
-              doc: snapshot.data!.docs[index].data(),
+            itemBuilder: (context, index) => Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: NewsCard(
+                doc: snapshot.data!.docs[index].data(),
+              ),
             ),
           );
         },
@@ -47,7 +55,7 @@ class NewsCard extends StatelessWidget {
         height: 347.h,
         width: 235.w,
         decoration: BoxDecoration(
-          color: const Color(0xFFFDE84C),
+          color: Colors.black,
           borderRadius: BorderRadius.circular(20.r),
           image: DecorationImage(
             image: NetworkImage(doc['imageUrl']),
@@ -60,24 +68,27 @@ class NewsCard extends StatelessWidget {
               padding: const EdgeInsets.all(15.0),
               child: Row(
                 children: [
-                  Container(
-                    height: 33.h,
-                    width: 120.w,
-                    decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.5),
-                      borderRadius: BorderRadius.circular(20.r),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        doc['tag'],
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 12.sp,
+                  if (doc['source'] != null)
+                    Container(
+                      height: 33.h,
+                      width: 120.w,
+                      decoration: BoxDecoration(
+                        color: Colors.white.withOpacity(0.5),
+                        borderRadius: BorderRadius.circular(20.r),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Center(
+                          child: Text(
+                            doc['source'] ?? "",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 12.sp,
+                            ),
+                          ),
                         ),
                       ),
                     ),
-                  ),
                 ],
               ),
             ),

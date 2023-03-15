@@ -1,6 +1,4 @@
 // search delegate
-import 'dart:math';
-
 import 'package:course_guide/controllers/search_controller.dart';
 import 'package:course_guide/models/course.dart';
 import 'package:course_guide/models/news.dart';
@@ -9,9 +7,7 @@ import 'package:course_guide/models/user.dart';
 import 'package:course_guide/views/courses/course_view.dart';
 import 'package:course_guide/views/home/home/widgets/news_detail.dart';
 import 'package:course_guide/views/home/home/widgets/scholarship_detail.dart';
-import 'package:course_guide/views/profile/user_view.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 // controllers
 
 class MySearchDelegate extends SearchDelegate<String> {
@@ -20,12 +16,12 @@ class MySearchDelegate extends SearchDelegate<String> {
 
   get searchList => [];
 
-  String getImageUrl(dynamic result) {
+  String? getImageUrl(dynamic result) {
     if (result is Course) {
       return result.imageUrl;
     } else if (result is Scholarships) {
       return result.image;
-    } else if(result is News) {
+    } else if (result is News) {
       return result.image;
     }
     return "";
@@ -98,12 +94,16 @@ class MySearchDelegate extends SearchDelegate<String> {
             itemBuilder: (context, index) {
               return ListTile(
                 leading: CircleAvatar(
-                  backgroundImage: NetworkImage(
-                    getImageUrl(
-                      snapshot.data[index],
-                    ),
-
-                  ),
+                  backgroundImage: getImageUrl(
+                            snapshot.data[index],
+                          ) !=
+                          null
+                      ? NetworkImage(
+                          getImageUrl(
+                            snapshot.data[index],
+                          )!,
+                        )
+                      : null,
                 ),
                 onTap: () {
                   selectedResult = snapshot.data[index];
@@ -173,7 +173,7 @@ class MySearchDelegate extends SearchDelegate<String> {
       ));
     }
 
-    if(selectedResult is News) {
+    if (selectedResult is News) {
       // navigate to news view
       Navigator.push(context, MaterialPageRoute(
         builder: (context) {

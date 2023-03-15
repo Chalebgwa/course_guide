@@ -1,6 +1,5 @@
 import 'package:course_guide/models/course.dart';
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class CourseView extends StatelessWidget {
   const CourseView({Key? key, required this.course}) : super(key: key);
@@ -10,9 +9,7 @@ class CourseView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         floatingActionButton: FloatingActionButton.extended(
-          onPressed: () {
-             launchUrl(Uri.parse(course.url));
-          },
+          onPressed: () async {},
           label: Text(
             "Apply",
             style: TextStyle(
@@ -26,22 +23,25 @@ class CourseView extends StatelessWidget {
             SliverAppBar(
               expandedHeight: 200,
               flexibleSpace: FlexibleSpaceBar(
-                title: Text(course.title),
-                background: Image.network(
-                  course.imageUrl,
-                  fit: BoxFit.cover,
-                ),
+                title: Text(course.title ?? ""),
+                background: course.imageUrl != null
+                    ? Image.network(
+                        course.imageUrl!,
+                        fit: BoxFit.cover,
+                      )
+                    : null,
               ),
             ),
-            SliverToBoxAdapter(
-              child: Text(
-                course.description,
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w300,
+            if (course.description != null)
+              SliverToBoxAdapter(
+                child: Text(
+                  course.description!,
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w300,
+                  ),
                 ),
-              ),
-            )
+              )
           ],
         ));
   }

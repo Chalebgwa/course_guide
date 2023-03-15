@@ -1,5 +1,4 @@
 // import badge
-import 'package:badges/badges.dart';
 import 'package:course_guide/controllers/auth.dart';
 import 'package:course_guide/controllers/notifications.dart';
 import 'package:course_guide/models/notification_model.dart';
@@ -26,7 +25,8 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
   String currentPage = "Courses";
-  List<String> filters = [];
+  String? filter = "Trending";
+  String? newsFilter = "Top Stories";
   @override
   Widget build(BuildContext context) {
     final auth = context.watch<Auth>();
@@ -217,56 +217,53 @@ class _HomeViewState extends State<HomeView> {
                 ],
               ),
             ),
-            if (currentPage == "News")
+            if (currentPage == "Courses")
               SliverToBoxAdapter(
                   child: Wrap(
-                alignment: WrapAlignment.spaceEvenly,
+                alignment: WrapAlignment.start,
                 crossAxisAlignment: WrapCrossAlignment.start,
                 runAlignment: WrapAlignment.start,
-                runSpacing: 10.h,
+                //runSpacing: 10.h,
                 children: [
                   FilterChipX(
                       icon: FontAwesomeIcons.bookBookmark,
-                      text: "For You",
-                      isSelected: filters.contains("For You"),
+                      text: "Trending",
+                      isSelected: filter == "Trending",
                       onTap: () {
                         setState(() {
-                          if (filters.contains("For You")) {
-                            filters.remove("For You");
-                          } else {
-                            filters.add("For You");
-                          }
+                          filter = "Trending";
                         });
                       }),
                   FilterChipX(
                       icon: FontAwesomeIcons.fire,
-                      text: "Features",
-                      isSelected: filters.contains("Features"),
+                      text: "Marketable",
+                      isSelected: filter == "Marketable",
                       onTap: () {
                         setState(() {
-                          if (filters.contains("Features")) {
-                            filters.remove("Features");
-                          } else {
-                            filters.add("Features");
-                          }
+                          filter = "Marketable";
                         });
                       }),
                   FilterChipX(
                       icon: FontAwesomeIcons.award,
-                      text: "Top Stories",
-                      isSelected: filters.contains("Top Stories"),
+                      text: "Newest",
+                      isSelected: filter == "Newest",
                       onTap: () {
                         setState(() {
-                          if (filters.contains("Top Stories")) {
-                            filters.remove("Top Stories");
-                          } else {
-                            filters.add("Top Stories");
-                          }
+                          filter = "Newest";
+                        });
+                      }),
+                  FilterChipX(
+                      icon: FontAwesomeIcons.award,
+                      text: "Advanced",
+                      isSelected: filter == "Advanced",
+                      onTap: () {
+                        setState(() {
+                          filter = "Advanced";
                         });
                       }),
                 ],
               )),
-            if (currentPage == "Courses")
+            if (currentPage == "News")
               SliverToBoxAdapter(
                   child: Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -274,58 +271,33 @@ class _HomeViewState extends State<HomeView> {
                   alignment: WrapAlignment.start,
                   crossAxisAlignment: WrapCrossAlignment.start,
                   runAlignment: WrapAlignment.start,
-                  runSpacing: 10.h,
+                  //runSpacing: 10.h,
                   children: [
                     FilterChipX(
                         icon: FontAwesomeIcons.bookBookmark,
-                        text: "Marketable",
-                        isSelected: filters.contains("Marketable"),
+                        text: "Top Stories",
+                        isSelected: newsFilter == "Top Stories",
                         onTap: () {
                           setState(() {
-                            if (filters.contains("Marketable")) {
-                              filters.remove("Marketable");
-                            } else {
-                              filters.add("Marketable");
-                            }
+                            newsFilter = "Top Stories";
                           });
                         }),
                     FilterChipX(
                         icon: FontAwesomeIcons.fire,
-                        text: "Trending",
-                        isSelected: filters.contains("Trending"),
+                        text: "For You",
+                        isSelected: newsFilter == "For You",
                         onTap: () {
                           setState(() {
-                            if (filters.contains("Trending")) {
-                              filters.remove("Trending");
-                            } else {
-                              filters.add("Trending");
-                            }
+                            newsFilter = "For You";
                           });
                         }),
                     FilterChipX(
                         icon: FontAwesomeIcons.award,
-                        text: "Newest",
-                        isSelected: filters.contains("Newest"),
+                        text: "Featured",
+                        isSelected: newsFilter == "Featured",
                         onTap: () {
                           setState(() {
-                            if (filters.contains("Newest")) {
-                              filters.remove("Newest");
-                            } else {
-                              filters.add("Newest");
-                            }
-                          });
-                        }),
-                    FilterChipX(
-                        icon: FontAwesomeIcons.rocket,
-                        text: "Advanced",
-                        isSelected: filters.contains("Advanced"),
-                        onTap: () {
-                          setState(() {
-                            if (filters.contains("Advanced")) {
-                              filters.remove("Advanced");
-                            } else {
-                              filters.add("Advanced");
-                            }
+                            newsFilter = "Featured";
                           });
                         }),
                   ],
@@ -337,7 +309,7 @@ class _HomeViewState extends State<HomeView> {
                   padding: const EdgeInsets.all(8.0),
                   child: Container(
                     height: 280.h,
-                    child: CourseList(fitered: filters),
+                    child: CourseList(filter: filter),
                   ),
                 ),
               ),
@@ -345,7 +317,7 @@ class _HomeViewState extends State<HomeView> {
               SliverToBoxAdapter(
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: NewList(fitered: filters),
+                  child: NewList(fitered: newsFilter),
                 ),
               ),
             if (currentPage == "Courses")
