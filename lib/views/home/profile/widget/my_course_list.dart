@@ -3,8 +3,6 @@ import 'package:course_guide/controllers/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:provider/provider.dart';
-// video player
-import 'package:video_player/video_player.dart';
 
 class MyCourseList extends StatefulWidget {
   const MyCourseList({Key? key}) : super(key: key);
@@ -15,31 +13,31 @@ class MyCourseList extends StatefulWidget {
 
 class _MyCourseListState extends State<MyCourseList> {
   // video controller
-  late VideoPlayerController _controller;
+  //late VideoPlayerController _controller;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
 
-    // video controller
-    _controller = VideoPlayerController.network(
-        'https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4')
-      ..initialize().then((_) {
-        // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
-        setState(() {});
-      });
+    // // video controller
+    // _controller = VideoPlayerController.network(
+    //     'https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4')
+    //   ..initialize().then((_) {
+    //     // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
+    //     setState(() {});
+    //   });
   }
 
-  void toggleVideo() {
-    setState(() {
-      if (_controller.value.isPlaying) {
-        _controller.pause();
-      } else {
-        _controller.play();
-      }
-    });
-  }
+  // void toggleVideo() {
+  //   setState(() {
+  //     if (_controller.value.isPlaying) {
+  //       _controller.pause();
+  //     } else {
+  //       _controller.play();
+  //     }
+  //   });
+  //}
 
   @override
   Widget build(BuildContext context) {

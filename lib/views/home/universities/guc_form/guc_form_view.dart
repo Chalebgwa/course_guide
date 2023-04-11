@@ -1,4 +1,3 @@
-import 'package:course_guide/util/validation_item.dart';
 import 'package:course_guide/views/global_widgets/input_text.dart';
 import 'package:course_guide/views/home/universities/guc_form/guc_form.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +13,7 @@ class GucFormView extends StatelessWidget {
     final form = context.watch<GucForm>();
     return Scaffold(
       appBar: AppBar(
-        title: const Text('GUC Form'),
+        title: const Text('GUC Form (For Testing purposes)'),
       ),
       body: SingleChildScrollView(
         child: Column(

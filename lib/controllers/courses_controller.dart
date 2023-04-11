@@ -1,12 +1,24 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:course_guide/controllers/auth.dart';
 import 'package:course_guide/models/course.dart';
 import 'package:flutter/material.dart';
 
 class CourseController extends ChangeNotifier {
+  final Auth auth;
   final List<Course> courses = [];
   final List<Course> filteredCourses = [];
+  bool showFilter = true;
+
+  toggleFilter() {
+    showFilter = !showFilter;
+    // persist filter state
+
+    notifyListeners();
+  }
+
+  CourseController(this.auth);
 
   StreamTransformer<QuerySnapshot<Map<String, dynamic>>, List<Course>>
       get streamTransformer {
@@ -64,16 +76,41 @@ class CourseController extends ChangeNotifier {
 
     try {
       if (category == null) {
-        stream = FirebaseFirestore.instance
-            .collectionGroup("courses")
-            //.where("featured", isEqualTo: "true")
-            .snapshots();
+        if (showFilter) {
+          stream = FirebaseFirestore.instance
+              .collectionGroup("courses")
+              .where(
+                "requiredSubjects",
+                arrayContainsAny: auth.currentUser?.results?.keys.toList(),
+              )
+              .where("minimumPoints",
+                  isGreaterThanOrEqualTo: auth.currentUser?.results?["points"])
+              .where("featured", isEqualTo: "true")
+              .snapshots();
+        } else {
+          stream =
+              FirebaseFirestore.instance.collectionGroup("courses").snapshots();
+        }
       } else {
-        stream = FirebaseFirestore.instance
-            .collectionGroup('courses')
-            .where('category', isEqualTo: category)
-            .where("featured", isEqualTo: "true")
-            .snapshots();
+        if (showFilter) {
+          stream = FirebaseFirestore.instance
+              .collectionGroup('courses')
+              .where('category', isEqualTo: category)
+              .where("featured", isEqualTo: "true")
+              .where(
+                "requiredSubjects",
+                arrayContainsAny: auth.currentUser?.results?.keys.toList(),
+              )
+              .where("minimumPoints",
+                  isGreaterThanOrEqualTo: auth.currentUser?.results?["points"])
+              .snapshots();
+        } else {
+          stream = FirebaseFirestore.instance
+              .collectionGroup('courses')
+              .where('category', isEqualTo: category)
+              .where("featured", isEqualTo: "true")
+              .snapshots();
+        }
       }
     } catch (e) {
       print(e);

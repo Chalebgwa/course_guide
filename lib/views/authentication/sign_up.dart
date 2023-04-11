@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:course_guide/controllers/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -33,6 +34,7 @@ class _SignUpState extends State<SignUp> {
   Widget build(BuildContext context) {
     final Auth auth = Provider.of<Auth>(context);
     return Scaffold(
+      key: auth.signUpKey,
       body: Container(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
@@ -362,23 +364,35 @@ class _SignUpState extends State<SignUp> {
                               padding: const EdgeInsets.only(top: 30),
                               child: ElevatedButton(
                                 onPressed: () async {
+                                  Map<String, String>? data = await showDialog(
+                                    context: context,
+                                    builder: (context) => const ResultsForm(),
+                                  );
+
+                                  if (data != null) {
+                                    print(data);
+                                  } else {
+                                    print("no data");
+                                  }
                                   if (_formKey.currentState!.validate()) {
                                     try {
                                       await auth.signUpWithEmailAndPassword(
-                                          _emailController.text,
-                                          _confirmPasswordController.text,
-                                          _fullnameController.text,
-                                          _locationController.text,
-                                          _selectedDate!);
+                                        _emailController.text,
+                                        _confirmPasswordController.text,
+                                        _fullnameController.text,
+                                        _locationController.text,
+                                        _selectedDate!,
+                                        result: data,
+                                      );
                                       if (mounted) {
                                         ScaffoldMessenger.of(context)
                                             .showSnackBar(
                                           const SnackBar(
                                             content: Text(
-                                                'Sign up successful, please login'),
+                                                'Sign up successful, please verify your email and login'),
                                           ),
                                         );
-                                        context.go("/home");
+                                        context.go("/sign-in");
                                       }
                                     } catch (e) {
                                       ScaffoldMessenger.of(context)
@@ -448,6 +462,235 @@ class _SignUpState extends State<SignUp> {
           ),
         ),
       ),
+    );
+  }
+}
+
+class ResultsForm extends StatefulWidget {
+  const ResultsForm({Key? key}) : super(key: key);
+
+  @override
+  _ResultsFormState createState() => _ResultsFormState();
+}
+
+class _ResultsFormState extends State<ResultsForm> {
+  final _formKey = GlobalKey<FormState>();
+  // collect best 6 subjects and their grades
+  final _subject1Controller = TextEditingController();
+  final _subject2Controller = TextEditingController();
+  final _subject3Controller = TextEditingController();
+  final _subject4Controller = TextEditingController();
+  final _subject5Controller = TextEditingController();
+  final _subject6Controller = TextEditingController();
+
+  final _grade1Controller = TextEditingController();
+  final _grade2Controller = TextEditingController();
+  final _grade3Controller = TextEditingController();
+  final _grade4Controller = TextEditingController();
+  final _grade5Controller = TextEditingController();
+  final _grade6Controller = TextEditingController();
+  final _pointsController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Results Form'),
+      ),
+      body: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+          stream: FirebaseFirestore.instance.collection("subs").snapshots(),
+          builder: (context, snapshot) {
+            final allSubjects = snapshot.data?.docs
+                .map<String>((e) => e.data()["name"])
+                .toList();
+            return Form(
+              key: _formKey,
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Padding(
+                      padding:
+                          const EdgeInsets.only(top: 30, left: 20, right: 20),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Points",
+                            style: TextStyle(
+                              color: HexColor("#40A49C"),
+                              fontSize: 12.sp,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          TextFormField(
+                            controller: _pointsController,
+                            validator: (String? value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter your points';
+                              }
+                              return null;
+                            },
+                            decoration: InputDecoration(
+                              fillColor: HexColor("#F2F3F7"),
+                              filled: true,
+                              hintText: "Points",
+                              hintStyle: const TextStyle(
+                                color: Colors.grey,
+                              ),
+                              border: const OutlineInputBorder(
+                                borderSide: BorderSide.none,
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(3),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                          "Enter your best 6 subjects and grades, along with your grades",
+                          style: TextStyle(
+                            color: HexColor("#40A49C"),
+                            fontSize: 12.sp,
+                            fontWeight: FontWeight.bold,
+                          )),
+                    ),
+                    // row of subject and grade
+                    buildSubject(
+                        _subject1Controller, _grade1Controller, allSubjects),
+                    buildSubject(
+                        _subject2Controller, _grade2Controller, allSubjects),
+                    buildSubject(
+                        _subject3Controller, _grade3Controller, allSubjects),
+                    buildSubject(
+                        _subject4Controller, _grade4Controller, allSubjects),
+                    buildSubject(
+                        _subject5Controller, _grade5Controller, allSubjects),
+                    buildSubject(
+                        _subject6Controller, _grade6Controller, allSubjects),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          // create a map of subjects and grades
+                          Map<String, String> results = {
+                            _subject1Controller.text: _grade1Controller.text,
+                            _subject2Controller.text: _grade2Controller.text,
+                            _subject3Controller.text: _grade3Controller.text,
+                            _subject4Controller.text: _grade4Controller.text,
+                            _subject5Controller.text: _grade5Controller.text,
+                            _subject6Controller.text: _grade6Controller.text,
+                            "points": _pointsController.text,
+                          };
+
+                          // save the results to the database
+                          Navigator.pop(context, results);
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text("Please fill in all fields"),
+                            ),
+                          );
+                        }
+                      },
+                      child: Text("Save"),
+                      style: ElevatedButton.styleFrom(
+                          fixedSize: Size(300.w, 40.h),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          )),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: Text("Skip"),
+                      style: ElevatedButton.styleFrom(
+                          fixedSize: Size(300.w, 40.h),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          )),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          }),
+    );
+  }
+
+  Row buildSubject(TextEditingController subject, TextEditingController grade,
+      List<String>? allSubjects) {
+    return Row(
+      children: [
+        Expanded(
+          flex: 3,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: DropdownButtonFormField(
+              validator: (value) {
+                if (value == null) {
+                  return 'Please select a subject';
+                }
+                return null;
+              },
+              decoration: InputDecoration(
+                hintText: "Subject",
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+              items: allSubjects
+                      ?.map(
+                        (e) => DropdownMenuItem(
+                          child: Text(e),
+                          value: e,
+                        ),
+                      )
+                      .toList() ??
+                  [],
+              onChanged: (value) {
+                subject.text = value.toString();
+              },
+            ),
+          ),
+        ),
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextFormField(
+              controller: grade,
+              validator: (value) {
+                if (value?.isEmpty == true) {
+                  return 'Please enter a grade';
+                }
+                // check if grade is valid
+                if (value != null && value.isNotEmpty) {
+                  if (int.tryParse(value) != null) {
+                    return 'Please enter a valid grade';
+                  }
+                }
+                return null;
+              },
+              decoration: InputDecoration(
+                hintText: "Grade",
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

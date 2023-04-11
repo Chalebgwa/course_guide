@@ -28,8 +28,6 @@ class Profile extends StatelessWidget {
             ),
           ),
           // call list tile
-         
-
         ],
       ),
     );

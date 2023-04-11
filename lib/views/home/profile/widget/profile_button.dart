@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:go_router/go_router.dart';
 
 class ProfileButton extends StatelessWidget {
   const ProfileButton(
-      {Key? key, required this.text, required this.icon, required this.onTap})
+      {Key? key,
+      required this.text,
+      required this.icon,
+      required this.onTap,
+      this.leading})
       : super(key: key);
   final String text;
   final IconData icon;
   final Function() onTap;
+  final Widget? leading;
 
   @override
   Widget build(BuildContext context) {
@@ -51,14 +55,16 @@ class ProfileButton extends StatelessWidget {
             ),
             // arrow icon button
             const Spacer(),
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(
-                Icons.arrow_forward_ios,
-                color: Color(0xFF40A49C),
-                size: 20,
+            if (leading != null) leading!,
+            if (leading == null)
+              IconButton(
+                onPressed: () {},
+                icon: const Icon(
+                  Icons.arrow_forward_ios,
+                  color: Color(0xFF40A49C),
+                  size: 20,
+                ),
               ),
-            ),
           ],
         ),
       ),

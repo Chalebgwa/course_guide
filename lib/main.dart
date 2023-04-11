@@ -13,7 +13,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:provider/provider.dart';
 import 'package:url_strategy/url_strategy.dart';
-import 'package:back_button_interceptor/back_button_interceptor.dart';
 
 void main() async {
   // ensure binding is initialized
@@ -58,13 +57,15 @@ class _MyAppState extends State<MyApp> {
               ChangeNotifierProvider(
                 create: (_) => NotificationsController(widget.auth),
               ),
-              ChangeNotifierProvider(create: (_) => CourseController()),
+              ChangeNotifierProvider(
+                  create: (_) => CourseController(widget.auth)),
               ChangeNotifierProvider(create: (_) => NavController()),
               ChangeNotifierProvider(create: (_) => ProfileForm(widget.auth)),
               ChangeNotifierProvider(create: (_) => GucForm(auth: widget.auth)),
             ],
             child: MaterialApp.router(
               title: 'Course Guide',
+              debugShowCheckedModeBanner: false,
               theme: ThemeData(
                 colorScheme: ColorScheme.light(
                   primary: HexColor('#FFC107'),

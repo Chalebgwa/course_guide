@@ -1,4 +1,5 @@
 import 'package:course_guide/controllers/auth.dart';
+import 'package:course_guide/controllers/courses_controller.dart';
 import 'package:course_guide/views/home/profile/widget/edit_profile.dart';
 import 'package:course_guide/views/home/profile/widget/my_course_list.dart';
 import 'package:course_guide/views/home/profile/widget/profile_button.dart';
@@ -13,6 +14,7 @@ class Profile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final auth = context.watch<Auth>();
+    final courseController = context.watch<CourseController>();
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -36,6 +38,24 @@ class Profile extends StatelessWidget {
         ProfileButton(
             text: "My Courses",
             icon: FontAwesomeIcons.file,
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => MyCourseList(),
+                ),
+              );
+            }),
+        const SizedBox(height: 20),
+        ProfileButton(
+            text: "Filter My Courses",
+            icon: FontAwesomeIcons.filter,
+            leading: Switch(
+              value: courseController.showFilter,
+              onChanged: (value) {
+                courseController.toggleFilter();
+              },
+            ),
             onTap: () {
               Navigator.push(
                 context,

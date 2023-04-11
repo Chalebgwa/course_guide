@@ -26,6 +26,7 @@ class _SignInPageState extends State<SignInPage> {
   Widget build(BuildContext context) {
     final Auth auth = Provider.of<Auth>(context);
     return Scaffold(
+      key: auth.signInKey,
       body: Form(
         key: _formKey,
         child: Container(

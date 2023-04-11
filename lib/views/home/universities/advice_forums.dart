@@ -28,6 +28,7 @@ class _AdviceForumsState extends State<AdviceForums> {
               .collection("universities")
               .doc(widget.docId)
               .collection("advice_forums")
+              .where("status", isEqualTo: "approved")
               .snapshots(),
           builder: (context, snapshot) {
             if (!snapshot.hasData) {
@@ -60,7 +61,8 @@ class _AdviceForumsState extends State<AdviceForums> {
                               .add({
                             "comment": _searchController.text,
                             "user": auth.currentUser!.toMap(),
-                            "date": DateTime.now()
+                            "date": DateTime.now(),
+                            "status": "pending"
                           });
 
                           _searchController.clear();

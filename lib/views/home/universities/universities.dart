@@ -1,14 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:course_guide/views/home/home/course_list.dart';
 import 'package:course_guide/views/home/universities/advice_forums.dart';
 import 'package:course_guide/views/home/universities/course_list.dart';
 import 'package:course_guide/views/home/universities/guc_form/guc_form.dart';
 import 'package:course_guide/views/home/universities/unipage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:provider/provider.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class Universities extends StatelessWidget {
   const Universities({Key? key}) : super(key: key);
@@ -96,15 +95,31 @@ class UniCard extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Container(
-                  width: 100.w,
+                  width: 100.h,
                   height: 100.h,
+                  child: Container(
+                    width: 100.h,
+                    height: 100.h,
+                    alignment: Alignment.bottomRight,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Icon(
+                        FontAwesomeIcons.eye,
+                        color: Colors.white,
+                        size: 20,
+                      ),
+                    ),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20.r),
+                      color: Colors.black.withOpacity(.5),
+                    ),
+                  ),
                   decoration: BoxDecoration(
-                    color: Colors.grey,
+                    color: Colors.white,
                     image: DecorationImage(
                       image: NetworkImage(uni["imageUrl"]),
-                      fit: BoxFit.cover,
+                      fit: BoxFit.contain,
                     ),
-                    borderRadius: BorderRadius.circular(20.r),
                   ),
                 ),
               ),

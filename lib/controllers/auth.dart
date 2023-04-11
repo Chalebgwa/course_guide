@@ -19,6 +19,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 class Auth extends ChangeNotifier {
   // scaffold key
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> signUpKey = GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> signInKey = GlobalKey<ScaffoldState>();
 
   Auth() {
     // get user data from local storage
@@ -75,6 +77,18 @@ class Auth extends ChangeNotifier {
         email: email.trim(),
         password: password,
       );
+
+      if (userCredential.user != null &&
+          userCredential.user?.emailVerified == false) {
+        if (signInKey.currentContext != null) {
+          ScaffoldMessenger.of(signInKey.currentContext!).showSnackBar(SnackBar(
+            content: Text("Check Your email to verify your account"),
+            duration: Duration(seconds: 5),
+          ));
+        }
+
+        return;
+      }
       // get user id
       final String uid = userCredential.user!.uid;
       // get user data from firestore
@@ -123,8 +137,14 @@ class Auth extends ChangeNotifier {
   }
 
   // sign up with email and password, name and location
-  Future<void> signUpWithEmailAndPassword(String email, String password,
-      String name, String location, DateTime dob) async {
+  Future<void> signUpWithEmailAndPassword(
+    String email,
+    String password,
+    String name,
+    String location,
+    DateTime dob, {
+    Map<String, dynamic>? result,
+  }) async {
     try {
       // sign up with email and password
       final UserCredential userCredential =
@@ -134,6 +154,16 @@ class Auth extends ChangeNotifier {
       );
       // get user id
       final String uid = userCredential.user!.uid;
+
+      // send confirmed email
+      userCredential.user?.sendEmailVerification().then((value) {
+        if (signUpKey.currentContext != null) {
+          ScaffoldMessenger.of(signUpKey.currentContext!).showSnackBar(SnackBar(
+            content: Text("Check Your email to verify your account"),
+            duration: Duration(seconds: 5),
+          ));
+        }
+      });
       // create user data
       final Map<String, dynamic> data = <String, dynamic>{
         'uid': uid,
@@ -143,6 +173,7 @@ class Auth extends ChangeNotifier {
         'location': location,
         'createdAt': DateTime.now().toIso8601String(),
         'dob': dob.toIso8601String(),
+        'result': result
       };
       // set current user
       _currentUser = Client.fromMap(data);

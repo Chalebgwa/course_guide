@@ -8,13 +8,25 @@ class Client {
   final DateTime? createdAt;
   final DateTime? dob;
   final String? phone;
+  final Map<String, dynamic>? results;
 
-  Client(this.uid, this.email, this.name, this.photoURL, this.location,
-      this.createdAt, this.dob, this.phone);
+  Client(
+    this.uid,
+    this.email,
+    this.name,
+    this.photoURL,
+    this.location,
+    this.createdAt,
+    this.dob,
+    this.phone, {
+    this.results,
+  });
 
-  Client.fromMap(Map<String, dynamic> data,)
-      : uid = data['uid'],
+  Client.fromMap(
+    Map<String, dynamic> data,
+  )   : uid = data['uid'],
         email = data['email'],
+        results = data['result'],
         phone = data['phone'],
         name = data['name'],
         photoURL = data['photoURL'],
@@ -23,8 +35,6 @@ class Client {
             ? DateTime.parse(data['createdAt'])
             : null,
         dob = data['dob'] != null ? DateTime.parse(data['dob']) : null;
-
-  
 
   Map<String, dynamic> toMap() {
     return {
@@ -36,6 +46,7 @@ class Client {
       'createdAt': createdAt?.toIso8601String(),
       "phone": phone,
       'dob': dob?.toIso8601String(),
+      'result': results,
     };
   }
 
@@ -49,6 +60,7 @@ class Client {
     DateTime? createdAt,
     DateTime? dob,
     String? phone,
+    Map<String, dynamic>? results,
   }) {
     return Client(
       uid ?? this.uid,
@@ -59,6 +71,7 @@ class Client {
       createdAt ?? this.createdAt,
       dob ?? this.dob,
       phone ?? this.phone,
+      results: results ?? this.results,
     );
   }
 
