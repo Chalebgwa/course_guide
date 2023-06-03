@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:course_guide/controllers/auth.dart';
+import 'package:course_guide/controllers/courses_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
@@ -474,6 +475,22 @@ class ResultsForm extends StatefulWidget {
 }
 
 class _ResultsFormState extends State<ResultsForm> {
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance?.addPostFrameCallback((_) {
+      // Fetch the CoursesController from the pre-existing ChangeNotifierProvider
+      CourseController coursesController = Provider.of<CourseController>(context, listen: false);
+
+      // Retrieve the values from the controller
+      Map<String, dynamic> subjectsAndGrades = coursesController.results;
+
+      // Call the populateControllers method with the retrieved values
+      populateControllers(subjectsAndGrades);
+    });
+  }
+
   final _formKey = GlobalKey<FormState>();
   // collect best 6 subjects and their grades
   final _subject1Controller = TextEditingController();
@@ -491,10 +508,51 @@ class _ResultsFormState extends State<ResultsForm> {
   final _grade6Controller = TextEditingController();
   final _pointsController = TextEditingController();
 
+
+
+
+
+  void populateControllers(Map<String,dynamic> subjectsAndGrades) {
+    final String points = subjectsAndGrades['points'] ?? '';
+
+    subjectsAndGrades.remove('points');
+
+    List<String> subjects = subjectsAndGrades.keys.toList();
+    List<dynamic> grades = subjectsAndGrades.values.toList();
+
+    _subject1Controller.text = subjects.length >= 1 ? subjects[0] : '';
+    _subject2Controller.text = subjects.length >= 2 ? subjects[1] : '';
+    _subject3Controller.text = subjects.length >= 3 ? subjects[2] : '';
+    _subject4Controller.text = subjects.length >= 4 ? subjects[3] : '';
+    _subject5Controller.text = subjects.length >= 5 ? subjects[4] : '';
+    _subject6Controller.text = subjects.length >= 6 ? subjects[5] : '';
+
+    _grade1Controller.text = grades.length >= 1 ? grades[0] : '';
+    _grade2Controller.text = grades.length >= 2 ? grades[1] : '';
+    _grade3Controller.text = grades.length >= 3 ? grades[2] : '';
+    _grade4Controller.text = grades.length >= 4 ? grades[3] : '';
+    _grade5Controller.text = grades.length >= 5 ? grades[4] : '';
+    _grade6Controller.text = grades.length >= 6 ? grades[5] : '';
+
+    _pointsController.text = points;
+
+    setState(() {
+
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            bottomLeft: Radius.circular(20),
+            bottomRight: Radius.circular(20),
+          ),
+        ),
+        backgroundColor: HexColor("#40A49C"),
         title: const Text('Results Form'),
       ),
       body: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
@@ -637,6 +695,7 @@ class _ResultsFormState extends State<ResultsForm> {
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: DropdownButtonFormField(
+              value: subject.text == '' ? null : subject.text,
               validator: (value) {
                 if (value == null) {
                   return 'Please select a subject';

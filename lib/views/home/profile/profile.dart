@@ -1,5 +1,6 @@
 import 'package:course_guide/controllers/auth.dart';
 import 'package:course_guide/controllers/courses_controller.dart';
+import 'package:course_guide/views/authentication/sign_up.dart';
 import 'package:course_guide/views/home/profile/widget/edit_profile.dart';
 import 'package:course_guide/views/home/profile/widget/my_course_list.dart';
 import 'package:course_guide/views/home/profile/widget/profile_button.dart';
@@ -57,13 +58,33 @@ class Profile extends StatelessWidget {
               },
             ),
             onTap: () {
-              Navigator.push(
+              courseController.toggleFilter();
+
+            }),
+        const SizedBox(height: 20),
+        ProfileButton(
+            text: "My Subjects",
+            icon: FontAwesomeIcons.book,
+            onTap: () async {
+
+              Map<String,dynamic> data = await Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => MyCourseList(),
+                  builder: (context) => ResultsForm(),
                 ),
               );
+
+              if(data.isNotEmpty){
+                courseController.updateResults(data).then((value) => ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text("Results Updated"),
+                    )
+                ));
+              }
+
             }),
+
+
       ],
     );
   }

@@ -102,7 +102,9 @@ class BottomNavButton extends StatelessWidget {
         children: [
           Badge.Badge(
             showBadge: isActive,
-            badgeColor: Colors.yellow.withOpacity(.4),
+            badgeStyle: Badge.BadgeStyle(
+              badgeColor: Colors.yellow.withOpacity(.4),
+            ),
             badgeContent: Container(
               width: 10.w,
               height: 10.h,

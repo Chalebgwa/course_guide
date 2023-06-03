@@ -11,6 +11,8 @@ class CourseController extends ChangeNotifier {
   final List<Course> filteredCourses = [];
   bool showFilter = true;
 
+  Map<String,dynamic> results = {};
+
   toggleFilter() {
     showFilter = !showFilter;
     // persist filter state
@@ -18,7 +20,43 @@ class CourseController extends ChangeNotifier {
     notifyListeners();
   }
 
-  CourseController(this.auth);
+  CourseController(this.auth){
+    fetchResults();
+  }
+
+  // fetch results from firebase using the user's id
+  Future<void> fetchResults() async {
+    try {
+      if (auth.currentUser?.uid != null) {
+        final doc = await FirebaseFirestore.instance
+            .collection("users")
+            .doc(auth.currentUser!.uid)
+            .get();
+
+        if(doc.exists) {
+          results = doc.data()?["result"];
+        }
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  // update results in firebase
+  Future<void> updateResults(Map<String, dynamic> results) async {
+    try {
+      if (auth.currentUser?.uid != null) {
+        await FirebaseFirestore.instance
+            .collection("users")
+            .doc(auth.currentUser!.uid)
+            .set({"result": results}, SetOptions(merge: true));
+
+        fetchResults();
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
 
   StreamTransformer<QuerySnapshot<Map<String, dynamic>>, List<Course>>
       get streamTransformer {

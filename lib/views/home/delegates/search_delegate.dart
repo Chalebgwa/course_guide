@@ -80,7 +80,7 @@ class MySearchDelegate extends SearchDelegate<String> {
   // search delegate
   @override
   Widget buildSuggestions(BuildContext context) {
-    final controller = SearchController();
+    final controller = CGSearchController();
 
     final searchFunctin = controller.search(query);
 

@@ -5,7 +5,7 @@ import 'package:course_guide/models/scholarships.dart';
 import 'package:course_guide/models/user.dart';
 import 'package:flutter/material.dart';
 
-class SearchController extends ChangeNotifier {
+class CGSearchController extends ChangeNotifier {
   bool _isSearching = false;
 
   bool get isSearching => _isSearching;

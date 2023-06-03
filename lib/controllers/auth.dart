@@ -22,6 +22,12 @@ class Auth extends ChangeNotifier {
   final GlobalKey<ScaffoldState> signUpKey = GlobalKey<ScaffoldState>();
   final GlobalKey<ScaffoldState> signInKey = GlobalKey<ScaffoldState>();
 
+  // temp profile picture
+  File? _tempProfilePicture;
+
+  // get temp profile picture
+  File? get tempProfilePhoto => _tempProfilePicture;
+
   Auth() {
     // get user data from local storage
     SharedPreferences.getInstance().then((prefs) {
@@ -249,10 +255,22 @@ class Auth extends ChangeNotifier {
         source: ImageSource.gallery,
         imageQuality: 50,
       );
+
+
+
       // if file is not null
       if (file != null) {
         // get file path
         final String path = file.path;
+        // set temp profile photo
+        _tempProfilePicture = File(path);
+        final doc = _currentUser!.toMap();
+
+        // reset current user to null
+        _currentUser = Client.fromMap(doc..['photoURL'] = null);
+        // notify listeners
+        notifyListeners();
+
         // get user id
         final String uid = _currentUser!.uid;
         // upload file to firebase storage
@@ -261,7 +279,7 @@ class Auth extends ChangeNotifier {
         // get download url
         final String downloadURL = await ref.getDownloadURL();
 
-        _currentUser!.copyWith(photoURL: downloadURL);
+        _currentUser = _currentUser!.copyWith(photoURL: downloadURL);
         // notify listeners
         // update user data in firestore
         FirebaseFirestore.instance
