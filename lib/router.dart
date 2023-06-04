@@ -60,7 +60,7 @@ final GoRouter router = GoRouter(
               ),
               GoRoute(
                 path: 'personalitytest',
-                builder: (context, state) => const PersonalityTest(),
+                builder: (context, state) => PersonalityTest(),
               ),
               GoRoute(
                 path: 'universities',

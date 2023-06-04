@@ -1,5 +1,6 @@
 import 'package:course_guide/controllers/auth.dart';
 import 'package:course_guide/controllers/courses_controller.dart';
+import 'package:course_guide/controllers/mbti_controller.dart';
 import 'package:course_guide/controllers/nav_control.dart';
 import 'package:course_guide/controllers/notifications.dart';
 import 'package:course_guide/firebase_options.dart';
@@ -62,6 +63,8 @@ class _MyAppState extends State<MyApp> {
               ChangeNotifierProvider(create: (_) => NavController()),
               ChangeNotifierProvider(create: (_) => ProfileForm(widget.auth)),
               ChangeNotifierProvider(create: (_) => GucForm(auth: widget.auth)),
+              ChangeNotifierProvider(create: (_) => MBTIController()),
+
             ],
             child: MaterialApp.router(
               title: 'Course Guide',

@@ -67,19 +67,19 @@ class Profile extends StatelessWidget {
             icon: FontAwesomeIcons.book,
             onTap: () async {
 
-              Map<String,dynamic> data = await Navigator.push(
+              Map<String,dynamic>? data = await Navigator.push(
                 context,
                 MaterialPageRoute(
                   builder: (context) => ResultsForm(),
                 ),
               );
 
-              if(data.isNotEmpty){
-                courseController.updateResults(data).then((value) => ScaffoldMessenger.of(context).showSnackBar(
+              if(data?.isNotEmpty == true){
+                courseController.updateResults(data!).then((value) => ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: Text("Results Updated"),
                     )
-                ));
+                ),);
               }
 
             }),
