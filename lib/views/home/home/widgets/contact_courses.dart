@@ -37,7 +37,7 @@ class ContactCourses extends StatelessWidget {
               // green text bold "Countact Course Councilor"
             ),
             Text(
-              "Contact Course Councilor",
+              "Contact Course Counsellor",
               style: TextStyle(
                 color: const Color(0xFF40A49C),
                 fontSize: 14.sp,

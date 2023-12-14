@@ -16,35 +16,35 @@ class PersonalityTest extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              'Question ${question.questionNumber}:',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 16),
-            Text(
-              question.questionText,
-              style: TextStyle(fontSize: 18),
-              textAlign: TextAlign.center,
-            ),
+            // Text(
+            //   'Question ${question.questionNumber}:',
+            //   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            // ),
+            // SizedBox(height: 16),
+            // Text(
+            //   question.questionText,
+            //   style: TextStyle(fontSize: 18),
+            //   textAlign: TextAlign.center,
+            // ),
             SizedBox(height: 32),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ElevatedButton(
-                  onPressed: () {
-                    mbtiProvider.updateAnswer(question.optionA);
-                  },
-                  child: Text(question.optionA),
-                ),
-                SizedBox(width: 16),
-                ElevatedButton(
-                  onPressed: () {
-                    mbtiProvider.updateAnswer(question.optionB);
-                  },
-                  child: Text(question.optionB),
-                ),
-              ],
-            ),
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.center,
+            //   children: [
+            //     ElevatedButton(
+            //       onPressed: () {
+            //         mbtiProvider.updateAnswer(question.optionA);
+            //       },
+            //       child: Text(question.optionA),
+            //     ),
+            //     SizedBox(width: 16),
+            //     ElevatedButton(
+            //       onPressed: () {
+            //         mbtiProvider.updateAnswer(question.optionB);
+            //       },
+            //       child: Text(question.optionB),
+            //     ),
+            //   ],
+            //),
             SizedBox(height: 32),
             ElevatedButton(
               onPressed: () {

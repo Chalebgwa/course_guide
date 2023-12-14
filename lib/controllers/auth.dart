@@ -46,14 +46,18 @@ class Auth extends ChangeNotifier {
     });
   }
 
-  Future<void> init() async {
+  Future<bool> init() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? userData = prefs.getString('user');
     if (userData != null) {
       _currentUser = Client.fromMap(jsonDecode(userData));
       _isAuthenticated = true;
       notifyListeners();
+
+      return true;
     }
+
+    return false;
   }
 
   bool _isAuthenticated = false;
@@ -255,8 +259,6 @@ class Auth extends ChangeNotifier {
         source: ImageSource.gallery,
         imageQuality: 50,
       );
-
-
 
       // if file is not null
       if (file != null) {

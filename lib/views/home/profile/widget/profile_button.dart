@@ -43,7 +43,7 @@ class ProfileButton extends StatelessWidget {
                   size: 30,
                 ),
               ),
-              // green text bold "Countact Course Councilor"
+              // green text bold "Countact Course Counsellor"
             ),
             Text(
               text,

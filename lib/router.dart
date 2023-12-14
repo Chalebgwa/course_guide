@@ -16,11 +16,12 @@ import 'package:provider/provider.dart';
 import 'controllers/auth.dart';
 
 final GoRouter router = GoRouter(
-  redirect: (context, state) {
+  redirect: (context, state) async {
     final auth = Provider.of<Auth>(context, listen: false);
-    if (auth.isAuthenticated && state.location == '/') {
+    bool isAuthenticated = await auth.init();
+    if (isAuthenticated && state.fullPath == '/') {
       return '/home';
-    } else if (!auth.isAuthenticated && state.location == '/') {
+    } else if (!isAuthenticated && state.fullPath == '/') {
       return '/landing';
     } else {
       return null;
@@ -69,7 +70,8 @@ final GoRouter router = GoRouter(
               GoRoute(
                 redirect: (BuildContext context, GoRouterState state) async {
                   final auth = Provider.of<Auth>(context, listen: false);
-                  if (auth.isAuthenticated && state.location == '/home') {
+                  bool isAuthenticated = await auth.init();
+                  if (isAuthenticated && state.fullPath == '/home') {
                     // ScaffoldMessenger.of(context).showSnackBar(
                     //   const SnackBar(
                     //     content: Text('Welcome back!'),
@@ -78,11 +80,11 @@ final GoRouter router = GoRouter(
                     // );
                     return null;
                   } else {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Invalid credentials'),
-                      ),
-                    );
+                    // ScaffoldMessenger.of(context).showSnackBar(
+                    //   const SnackBar(
+                    //     content: Text('Invalid credentials'),
+                    //   ),
+                    //);
                     return '/sign-in';
                   }
                 },
