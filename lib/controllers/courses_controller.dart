@@ -11,7 +11,7 @@ class CourseController extends ChangeNotifier {
   final List<Course> filteredCourses = [];
   bool showFilter = true;
 
-  Map<String,dynamic> results = {};
+  Map<String, dynamic> results = {};
 
   toggleFilter() {
     showFilter = !showFilter;
@@ -20,7 +20,7 @@ class CourseController extends ChangeNotifier {
     notifyListeners();
   }
 
-  CourseController(this.auth){
+  CourseController(this.auth) {
     fetchResults();
   }
 
@@ -33,7 +33,7 @@ class CourseController extends ChangeNotifier {
             .doc(auth.currentUser!.uid)
             .get();
 
-        if(doc.exists) {
+        if (doc.exists) {
           results = doc.data()?["result"];
         }
       }

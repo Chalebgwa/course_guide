@@ -89,25 +89,6 @@ class CourseCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
-                      width: 79.w,
-                      height: 33.h,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20.r),
-                        border: Border.all(
-                          color: Colors.white,
-                        ),
-                      ),
-                      alignment: Alignment.center,
-                      child: Text(
-                        course.state ?? "",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 12.sp,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
                     Spacer(),
                     Text(course.title ?? "",
                         style: TextStyle(

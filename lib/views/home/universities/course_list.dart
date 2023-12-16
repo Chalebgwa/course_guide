@@ -194,7 +194,7 @@ class _CoursesListState extends State<CoursesList> {
         title: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Text(
-            doc.data()!["title"],
+            doc.data()?["title"] ?? "No Title",
             style: const TextStyle(
               color: Colors.black,
               fontSize: 15,

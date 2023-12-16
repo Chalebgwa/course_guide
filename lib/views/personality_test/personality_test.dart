@@ -46,17 +46,6 @@ class PersonalityTest extends StatelessWidget {
             //   ],
             //),
             SizedBox(height: 32),
-            ElevatedButton(
-              onPressed: () {
-                mbtiProvider.calculatePersonalityType();
-              },
-              child: Text('Calculate Result'),
-            ),
-            SizedBox(height: 16),
-            Text(
-              'Personality Type: ${mbtiProvider.personalityType}',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
           ],
         ),
       ),

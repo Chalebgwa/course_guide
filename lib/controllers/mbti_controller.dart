@@ -1,4 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:course_guide/models/course.dart';
 import 'package:course_guide/models/question.dart';
+import 'package:course_guide/util/careers.dart';
 import 'package:course_guide/util/questions.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -6,6 +9,7 @@ class MBTIController extends ChangeNotifier {
   String? _mbti;
 
   String? get mbti => _mbti;
+  bool completedTest = false;
 
   final E = {
     '3A': 2,
@@ -132,22 +136,19 @@ class MBTIController extends ChangeNotifier {
     '41B': 2,
   };
 
-
-
-
-
-
   String personalityType = '';
 
-  List<Map<String,dynamic>> get _questions {
-    return questions..sort((a, b) => int.parse(a.entries.first.key.substring(1)).compareTo(int.parse(b.entries.first.key.substring(1))));
+  List<Map<String, dynamic>> get _questions {
+    return questions
+      ..sort((a, b) => int.parse(a.entries.first.key.substring(1))
+          .compareTo(int.parse(b.entries.first.key.substring(1))));
   }
 
   int _currentQuestionIndex = 1;
 
   int get currentQuestionIndex => _currentQuestionIndex;
 
-  Map get currentQuestion => _questions[_currentQuestionIndex-1];
+  Map get currentQuestion => _questions[_currentQuestionIndex - 1];
   Map<String, dynamic> points = {
     'E': 0,
     'I': 0,
@@ -159,10 +160,7 @@ class MBTIController extends ChangeNotifier {
     'P': 0,
   };
 
-
-
   void updateAnswer(String answer) {
-
     String key = '${_currentQuestionIndex}$answer';
 
     // check if key exists in the map of E/I, S/N, T/F, J/P
@@ -188,6 +186,7 @@ class MBTIController extends ChangeNotifier {
     if (_currentQuestionIndex >= _questions.length) {
       calculatePersonalityType();
       _currentQuestionIndex = 1;
+      completedTest = true;
     }
 
     notifyListeners();
@@ -217,6 +216,7 @@ class MBTIController extends ChangeNotifier {
     }
 
     notifyListeners();
+    completedTest = false;
   }
 
   set mbti(String? value) {
@@ -224,7 +224,48 @@ class MBTIController extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<List<Course>> getCourses() async {
+    try {
+      final careers = personalityTypesAndCareers[personalityType];
 
+      if (careers == null) {
+        // Handle the case where personalityType is not found in the map
+        return [];
+      }
 
+      final QuerySnapshot<Map<String, dynamic>> dbdocs = await FirebaseFirestore
+          .instance
+          .collectionGroup('courses')
+          .where('personalityTypes', arrayContains: personalityType)
+          .get();
 
+      final courses = dbdocs.docs
+          .map((DocumentSnapshot<Map<String, dynamic>> e) =>
+              Course.fromJson(e.data()!)) // Make sure to handle null
+          .toList();
+
+      return courses;
+    } catch (e) {
+      // Handle exceptions or errors, log them, or return an empty list
+      print('Error fetching courses: $e');
+      return [];
+    }
+  }
+
+  void resetTest() {
+    completedTest = false;
+    personalityType = '';
+    _currentQuestionIndex = 1;
+    points = {
+      'E': 0,
+      'I': 0,
+      'S': 0,
+      'N': 0,
+      'T': 0,
+      'F': 0,
+      'J': 0,
+      'P': 0,
+    };
+    notifyListeners();
+  }
 }

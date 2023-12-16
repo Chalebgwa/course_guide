@@ -42,7 +42,8 @@ final questions = [
     },
   },
   {
-    "Q7": "DOES THE IDEA OF MAKING A LIST OF WHAT YOU SHOULD GET DONE OVER A WEEKEND",
+    "Q7":
+        "DOES THE IDEA OF MAKING A LIST OF WHAT YOU SHOULD GET DONE OVER A WEEKEND",
     "answers": {
       "A": "HELP YOU",
       "B": "STRESS YOU",
@@ -67,7 +68,8 @@ final questions = [
     "Q10": "DO YOU ADMIRE MORE THE PEOPLE WHO ARE",
     "answers": {
       "A": "NORMAL-ACTING TO NEVER MAKE THEMSELVES THE CENTER OF ATTENTION",
-      "B": "TOO ORIGINAL AND INDIVIDUAL TO CARE WHETHER THEY ARE THE CENTER OF ATTENTION OR NOT",
+      "B":
+          "TOO ORIGINAL AND INDIVIDUAL TO CARE WHETHER THEY ARE THE CENTER OF ATTENTION OR NOT",
     },
   },
   {
@@ -109,7 +111,8 @@ final questions = [
     "Q16": "DO YOU",
     "answers": {
       "A": "TALK EASILY TO ALMOST ANYONE FOR AS LONG AS YOU HAVE TO",
-      "B": "FIND A LOT TO SAY ONLY TO CERTAIN PEOPLE OR UNDER CERTAIN CONDITIONS?",
+      "B":
+          "FIND A LOT TO SAY ONLY TO CERTAIN PEOPLE OR UNDER CERTAIN CONDITIONS?",
     },
   },
   {
@@ -120,7 +123,8 @@ final questions = [
     },
   },
   {
-    "Q18": "WHEN IT IS SETTLED WELL IN ADVANCE THAT YOU WILL DO A CERTAIN THING AT A CERTAIN TIME, DO YOU FIND IT",
+    "Q18":
+        "WHEN IT IS SETTLED WELL IN ADVANCE THAT YOU WILL DO A CERTAIN THING AT A CERTAIN TIME, DO YOU FIND IT",
     "answers": {
       "A": "NICE TO BE ABLE TO PLAN ACCORDINGLY",
       "B": "A LITTLE UNPLEASANT TO BE TIED DOWN?",
@@ -130,7 +134,8 @@ final questions = [
     "Q19": "ARE YOU MORE SUCCESSFUL",
     "answers": {
       "A": "AT FOLLOWING A CAREFULLY WORKED OUT PLAN",
-      "B": "AT DEALING WITH THE UNEXPECTED AND SEEING QUICKLY WHAT SHOULD BE DONE?",
+      "B":
+          "AT DEALING WITH THE UNEXPECTED AND SEEING QUICKLY WHAT SHOULD BE DONE?",
     },
   },
   {
@@ -169,7 +174,7 @@ final questions = [
     },
   },
   {
-    "Q25": "(ON THIS QUESTION ONLY, IF TWO ANSWERS ARE TRUE, CIRCLE BOTH) IN YOUR DAILY WORK, DO YOU",
+    "Q25": "IN YOUR DAILY WORK, DO YOU",
     "answers": {
       "A": "USUALLY PLAN YOUR WORK SO YOU WON'T NEED TO WORK UNDER PRESSURE",
       "B": "RATHER ENJOY AN EMERGENCY THAT MAKES YOU WORK AGAINST TIME",
@@ -183,175 +188,100 @@ final questions = [
       "B": "KEEP YOUR FEELINGS TO YOURSELF?",
     },
   },
-
-    {
-      "Q27": "WHICH WORD PAIR APPEALS TO YOU THE MOST?",
-      "answers": {
-        "A": "SCHEDULED",
-        "B": "UNPLANNED"
-      }
-    },
-    {
-      "Q28": "WHICH WORD PAIR APPEALS TO YOU THE MOST?",
-      "answers": {
-        "A": "FACTS",
-        "B": "IDEAS"
-      }
-    },
-    {
-      "Q29": "WHICH WORD PAIR APPEALS TO YOU THE MOST?",
-      "answers": {
-        "A": "QUIET",
-        "B": "HEARTY"
-      }
-    },
-    {
-      "Q30": "WHICH WORD PAIR APPEALS TO YOU THE MOST?",
-      "answers": {
-        "A": "CONVINCING",
-        "B": "TOUCHING"
-      }
-    },
-    {
-      "Q31": "WHICH WORD PAIR APPEALS TO YOU THE MOST?",
-      "answers": {
-        "A": "IMAGINATIVE",
-        "B": "MATTER-OF-FACT"
-      }
-    },
-    {
-      "Q32": "WHICH WORD PAIR APPEALS TO YOU THE MOST?",
-      "answers": {
-        "A": "BENEFITS",
-        "B": "BLESSINGS"
-      }
-    },
-    {
-      "Q35": "WHICH WORD PAIR APPEALS TO YOU THE MOST?",
-      "answers": {
-        "A": "STATEMENT",
-        "B": "CONCEPT"
-      }
-    },
-    {
-      "Q36": "WHICH WORD PAIR APPEALS TO YOU THE MOST?",
-      "answers": {
-        "A": "RESERVED",
-        "B": "TALKATIVE"
-      }
-    },
-    {
-      "Q37": "WHICH WORD PAIR APPEALS TO YOU THE MOST?",
-      "answers": {
-        "A": "ANALYZE",
-        "B": "SYMPATHIZE"
-      }
-    },
-    {
-      "Q38": "WHICH WORD PAIR APPEALS TO YOU THE MOST?",
-      "answers": {
-        "A": "CREATE",
-        "B": "MAKE"
-      }
-    },
-    {
-      "Q39": "WHICH WORD PAIR APPEALS TO YOU THE MOST?",
-      "answers": {
-        "A": "DETERMINED",
-        "B": "DEVOTED"
-      }
-    },
-    {
-      "Q40": "WHICH WORD PAIR APPEALS TO YOU THE MOST?",
-      "answers": {
-        "A": "GENTLE",
-        "B": "FIRM"
-      }
-    },
-    {
-      "Q43": "WHICH WORD PAIR APPEALS TO YOU THE MOST?",
-      "answers": {
-        "A": "CALM",
-        "B": "LIVELY"
-      }
-    },
-    {
-      "Q44": "WHICH WORD PAIR APPEALS TO YOU THE MOST?",
-      "answers": {
-        "A": "JUSTICE",
-        "B": "MERCY"
-      }
-    },
-    {
-      "Q45": "WHICH WORD PAIR APPEALS TO YOU THE MOST?",
-      "answers": {
-        "A": "FASCINATING",
-        "B": "SENSIBLE"
-      }
-    },
-    {
-      "Q46": "WHICH WORD PAIR APPEALS TO YOU THE MOST?",
-      "answers": {
-        "A": "FIRM-MINDED",
-        "B": "WARM-HEARTED"
-      }
-    },
-    {
-      "Q47": "WHICH WORD PAIR APPEALS TO YOU THE MOST?",
-      "answers": {
-        "A": "FEELING",
-        "B": "THINKING"
-      }
-    },
-    {
-      "Q48": "WHICH WORD PAIR APPEALS TO YOU THE MOST?",
-      "answers": {
-        "A": "LITERAL",
-        "B": "FIGURATIVE"
-      }
-    },
-    {
-      "Q33": "WHICH WORD PAIR APPEALS TO YOU THE MOST?",
-      "answers": {
-        "A": "PEACEMAKER",
-        "B": "JUDGE"
-      }
-    },
-    {
-      "Q34": "WHICH WORD PAIR APPEALS TO YOU THE MOST?",
-      "answers": {
-        "A": "SYSTEMATIC",
-        "B": "SPONTANEOUS"
-      }
-    },
-    {
-      "Q41": "WHICH WORD PAIR APPEALS TO YOU THE MOST?",
-      "answers": {
-        "A": "SYSTEMATIC",
-        "B": "CASUAL"
-      }
-    },
-    {
-      "Q49": "WHICH WORD PAIR APPEALS TO YOU THE MOST?",
-      "answers": {
-        "A": "CERTAINTY",
-        "B": "THEORY"
-      }
-    },
-    {
-      "Q42": "WHICH WORD PAIR APPEALS TO YOU THE MOST?",
-      "answers": {
-        "A": "ANTICIPATION",
-        "B": "COMPASSION"
-      }
-    },
-    {
-      "Q50": "WHICH WORD PAIR APPEALS TO YOU THE MOST?",
-      "answers": {
-        "A": "HARD",
-        "B": "SOFT"
-      }
-    }
-
-
+  {
+    "Q27": "WHICH WORD PAIR APPEALS TO YOU THE MOST?",
+    "answers": {"A": "SCHEDULED", "B": "UNPLANNED"}
+  },
+  {
+    "Q28": "WHICH WORD PAIR APPEALS TO YOU THE MOST?",
+    "answers": {"A": "FACTS", "B": "IDEAS"}
+  },
+  {
+    "Q29": "WHICH WORD PAIR APPEALS TO YOU THE MOST?",
+    "answers": {"A": "QUIET", "B": "HEARTY"}
+  },
+  {
+    "Q30": "WHICH WORD PAIR APPEALS TO YOU THE MOST?",
+    "answers": {"A": "CONVINCING", "B": "TOUCHING"}
+  },
+  {
+    "Q31": "WHICH WORD PAIR APPEALS TO YOU THE MOST?",
+    "answers": {"A": "IMAGINATIVE", "B": "MATTER-OF-FACT"}
+  },
+  {
+    "Q32": "WHICH WORD PAIR APPEALS TO YOU THE MOST?",
+    "answers": {"A": "BENEFITS", "B": "BLESSINGS"}
+  },
+  {
+    "Q35": "WHICH WORD PAIR APPEALS TO YOU THE MOST?",
+    "answers": {"A": "STATEMENT", "B": "CONCEPT"}
+  },
+  {
+    "Q36": "WHICH WORD PAIR APPEALS TO YOU THE MOST?",
+    "answers": {"A": "RESERVED", "B": "TALKATIVE"}
+  },
+  {
+    "Q37": "WHICH WORD PAIR APPEALS TO YOU THE MOST?",
+    "answers": {"A": "ANALYZE", "B": "SYMPATHIZE"}
+  },
+  {
+    "Q38": "WHICH WORD PAIR APPEALS TO YOU THE MOST?",
+    "answers": {"A": "CREATE", "B": "MAKE"}
+  },
+  {
+    "Q39": "WHICH WORD PAIR APPEALS TO YOU THE MOST?",
+    "answers": {"A": "DETERMINED", "B": "DEVOTED"}
+  },
+  {
+    "Q40": "WHICH WORD PAIR APPEALS TO YOU THE MOST?",
+    "answers": {"A": "GENTLE", "B": "FIRM"}
+  },
+  {
+    "Q43": "WHICH WORD PAIR APPEALS TO YOU THE MOST?",
+    "answers": {"A": "CALM", "B": "LIVELY"}
+  },
+  {
+    "Q44": "WHICH WORD PAIR APPEALS TO YOU THE MOST?",
+    "answers": {"A": "JUSTICE", "B": "MERCY"}
+  },
+  {
+    "Q45": "WHICH WORD PAIR APPEALS TO YOU THE MOST?",
+    "answers": {"A": "FASCINATING", "B": "SENSIBLE"}
+  },
+  {
+    "Q46": "WHICH WORD PAIR APPEALS TO YOU THE MOST?",
+    "answers": {"A": "FIRM-MINDED", "B": "WARM-HEARTED"}
+  },
+  {
+    "Q47": "WHICH WORD PAIR APPEALS TO YOU THE MOST?",
+    "answers": {"A": "FEELING", "B": "THINKING"}
+  },
+  {
+    "Q48": "WHICH WORD PAIR APPEALS TO YOU THE MOST?",
+    "answers": {"A": "LITERAL", "B": "FIGURATIVE"}
+  },
+  {
+    "Q33": "WHICH WORD PAIR APPEALS TO YOU THE MOST?",
+    "answers": {"A": "PEACEMAKER", "B": "JUDGE"}
+  },
+  {
+    "Q34": "WHICH WORD PAIR APPEALS TO YOU THE MOST?",
+    "answers": {"A": "SYSTEMATIC", "B": "SPONTANEOUS"}
+  },
+  {
+    "Q41": "WHICH WORD PAIR APPEALS TO YOU THE MOST?",
+    "answers": {"A": "SYSTEMATIC", "B": "CASUAL"}
+  },
+  {
+    "Q49": "WHICH WORD PAIR APPEALS TO YOU THE MOST?",
+    "answers": {"A": "CERTAINTY", "B": "THEORY"}
+  },
+  {
+    "Q42": "WHICH WORD PAIR APPEALS TO YOU THE MOST?",
+    "answers": {"A": "ANTICIPATION", "B": "COMPASSION"}
+  },
+  {
+    "Q50": "WHICH WORD PAIR APPEALS TO YOU THE MOST?",
+    "answers": {"A": "HARD", "B": "SOFT"}
+  }
 ];

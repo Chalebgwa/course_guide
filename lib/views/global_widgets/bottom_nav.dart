@@ -47,7 +47,7 @@ class BottomNav extends StatelessWidget {
               text: "Universities",
               isActive: navController.currentRoute == "Universities"),
           BottomNavButton(
-              icon: FontAwesomeIcons.question,
+              icon: FontAwesomeIcons.brain,
               text: "Personality Test",
               isActive: navController.currentRoute == "Personality Test"),
           BottomNavButton(
